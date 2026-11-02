@@ -1,4 +1,4 @@
-"""The ingest pipeline: events in, stored events, findings and alerts out (SOT 4.2, 7.5).
+"""The ingest pipeline: events in, stored events, findings and alerts out.
 
 For every event:
 
@@ -7,7 +7,7 @@ For every event:
      the path redacted).
   3. A match we are only guessing at (confidence ``low``) stops here: it is shown as
      "unconfirmed" but creates no findings, alerts or score.
-  4. If the event has a readable body, run the analyzer (``analyze``: Saleha's module,
+  4. If the event has a readable body, run the analyzer (``analyze``: the analysis module,
      injected so tests can use a stub).
   5. Add the pipeline's own policy findings (unapproved tool, local model).
   6. Store the findings, one alert for each that matters, and the agent activity.
@@ -65,12 +65,12 @@ Publish = Callable[[str, "BaseModel | dict[str, Any]"], None]
 
 MAX_ERRORS = 20
 REPEAT_ALERT_GAP_S = 5.0                     # the same leak sent again within this long is one occurrence
-ALERT_MIN_SEVERITY = Severity.MEDIUM          # SOT 7.5: one alert per finding of at least medium
+ALERT_MIN_SEVERITY = Severity.MEDIUM          # one alert per finding of at least medium
 POLICY_UNSANCTIONED = "POLICY_UNSANCTIONED_TOOL"
 POLICY_LOCAL = "POLICY_LOCAL_LLM"
 PATH_HIDDEN = "[path hidden]"
 
-# A credential in these headers is normal use when it is the provider's own kind of key (SOT 7.1).
+# A credential in these headers is normal use when it is the provider's own kind of key.
 _CREDENTIAL_HEADERS = {LocationField.HEADER_AUTHORIZATION, LocationField.HEADER_X_API_KEY}
 
 
@@ -234,7 +234,7 @@ class Pipeline:
             self._emit(kind, payload)
 
     def _with_safe_path(self, event: NetEvent) -> NetEvent:
-        """The event as it may be stored and published (SOT 6.10). This covers every event,
+        """The event as it may be stored and published. This covers every event,
         including ones the analyzer never sees. If the check fails the path is withheld."""
         if not event.path:
             return event
@@ -246,7 +246,7 @@ class Pipeline:
         return event if safe == event.path else event.model_copy(update={"path": safe})
 
     def _run_analysis(self, event: NetEvent, match: ProviderMatch, batch: _Batch) -> AnalysisResult:
-        if event.visibility is not Visibility.FULL:              # nothing readable: nothing to analyse (SOT 4.3)
+        if event.visibility is not Visibility.FULL:              # nothing readable: nothing to analyse
             return AnalysisResult()
         try:
             raw = self._analyze(event, self.config, self.contexts.get(match.tool_id))
@@ -305,7 +305,7 @@ class Pipeline:
 
     @staticmethod
     def _alert_for(finding: Finding, match: ProviderMatch, source: Source | None = None) -> Alert | None:
-        """An alert for every finding of at least medium severity, and for each unapproved tool (SOT 7.5)."""
+        """An alert for every finding of at least medium severity, and for each unapproved tool."""
         unsanctioned = finding.rule_id == POLICY_UNSANCTIONED
         if not unsanctioned and finding.severity.rank < ALERT_MIN_SEVERITY.rank:
             return None

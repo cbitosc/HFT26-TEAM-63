@@ -1,4 +1,4 @@
-"""Remediation written without a model (SOT 7.7). Used in template mode and whenever the model cannot be used.
+"""Remediation written without a model. Used in template mode and whenever the model cannot be used.
 
 Which template an alert gets depends on its rule; the first matching row wins and the last row catches
 anything else. The advice is the same for every alert of a kind, so it never contains anything from the traffic.
@@ -83,7 +83,7 @@ TEMPLATES: dict[str, Template] = {t.key: t for t in (
               "Restrict the agent's file access to the project folder."),
              ("agent_action",)),
     Template("generic",
-             "ShadowLens flagged something that needs a person to look at it.",
+             "Shadow Lens flagged something that needs a person to look at it.",
              ("Open the finding and read what was detected.",
               "Decide whether it is real and whether it needs action.",
               "Acknowledge the alert when you have dealt with it."),

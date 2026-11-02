@@ -1,4 +1,4 @@
-"""Payload analysis: secrets, personal data, code and agent behavior (SOT 7.3, 7.4).
+"""Payload analysis: secrets, personal data, code and agent behavior.
 
 See ``docs/DETECTORS.md``.
 """

@@ -1,4 +1,4 @@
-"""Compliance, evidence and the local-only guard (SOT 7.6, 8.5, AT-21)."""
+"""Compliance, evidence and the local-only guard."""
 
 import json
 
@@ -23,7 +23,7 @@ def client(tmp_path):
 
 # ---- compliance -------------------------------------------------------------
 
-def test_the_shipped_mapping_loads_and_has_every_control_from_the_sot():
+def test_the_shipped_mapping_loads_and_has_every_documented_control():
     controls = {c.id: c for c in comp.load_controls()}
     assert len(controls) == 12
     assert controls["OWASP-LLM01"].rules == ["AGENT_INJECTION_CHAIN"]

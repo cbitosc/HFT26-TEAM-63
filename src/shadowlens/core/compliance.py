@@ -1,4 +1,4 @@
-"""Which compliance controls have a gap (SOT 7.6).
+"""Which compliance controls have a gap.
 
 The mapping from rules to controls is data (``config/compliance.yaml``). A control has a gap when a mapped
 finding is still open, meaning its alert has not been acknowledged (a finding that never raised an alert is

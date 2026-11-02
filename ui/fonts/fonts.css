@@ -1,4 +1,4 @@
-/* Self-hosted fonts. No external requests (SOT 2.5, AT-20).
+/* Self-hosted fonts. No external requests.
    Hanken Grotesk and IBM Plex Mono, SIL Open Font License 1.1 (see LICENSE-*.txt in this folder).
    Latin subset only. Weight 600 stays unused (brand p14). */
 @font-face { font-family: "Hanken Grotesk"; font-weight: 400; font-style: normal; font-display: swap; src: url("hanken-grotesk-latin-400-normal.woff2") format("woff2"); }

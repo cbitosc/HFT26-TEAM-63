@@ -1,4 +1,4 @@
-"""Detection over plain text: secrets, personal data and code (SOT 7.3).
+"""Detection over plain text: secrets, personal data and code.
 
 Each detector runs on its own, so one that fails costs only its own rules. ``failed`` says which
 did, and anything that decides whether text is safe to send must treat a failure as unsafe.

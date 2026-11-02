@@ -1,4 +1,4 @@
-"""AT-04, AT-05: detection meets its targets on the labeled fixtures (SOT 8.4)."""
+"""detection meets its targets on the labeled fixtures."""
 
 import json
 import re
@@ -30,7 +30,7 @@ def metric(report, metric_id):
     return next(m for m in report.metrics if m.id == metric_id)
 
 
-# ---- the fixture files meet SOT 8.4 ------------------------------------------------
+# ---- the fixture files meet the labeling rules ------------------------------------------------
 
 def test_payload_fixture_size_and_coverage():
     rows = load_rows(REPO_ROOT / PAYLOADS)
@@ -61,7 +61,7 @@ def test_row_ids_are_unique_and_labels_are_real_rules(path):
 
 @pytest.mark.parametrize("path", [PAYLOADS, AGENTS])
 def test_fixture_file_holds_no_token_shaped_literal(path):
-    """AT-26: fakes appear only as placeholders."""
+    """fakes appear only as placeholders."""
     raw = (REPO_ROOT / path).read_text(encoding="utf-8")
     assert find_named_secrets(re.sub(r"\{\{fake:[a-z0-9_]+(?:#\d+)?\}\}", "", raw)) == []
 
@@ -83,7 +83,7 @@ def test_at12_no_raw_values_in_the_output(report):
 
 
 def test_no_problems_at_all_today(report):
-    """Stricter than the SOT targets, so a new miss or false positive is seen straight away."""
+    """Stricter than the published targets, so a new miss or false positive is seen straight away."""
     assert report.problems == []
 
 

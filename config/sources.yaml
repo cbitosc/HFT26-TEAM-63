@@ -1,4 +1,4 @@
-# Places where AI tools keep readable text of what was sent (SOT 7.2.1). Loaded by src/shadowlens/ingest/sources.py.
+# Places where AI tools keep readable text of what was sent. Loaded by src/shadowlens/ingest/sources.py.
 #
 # paths           : globs. "~" is the home folder; other relative paths are relative to the project folder.
 # reader          : how to read a line (ingest/transcripts.py).

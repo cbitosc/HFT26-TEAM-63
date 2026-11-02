@@ -1,7 +1,7 @@
-"""AT-08: each scenario meets its expected result (SOT 8.2).
+"""each scenario meets its expected result.
 
 Scenarios go through the real parser, classifier, analyzer, pipeline and database. Only
-``WEIGHT``, ``EXPOSURE`` and ``score`` are a small copy of SOT 7.5, until ``core/scoring.py`` exists.
+``WEIGHT``, ``EXPOSURE`` and ``score`` are a small copy of the scoring formula, until ``core/scoring.py`` exists.
 """
 
 import math
@@ -84,7 +84,7 @@ def runs(tmp_path_factory):
         run.db.close()
 
 
-# ---- expected results (SOT 8.2) --------------------------------------------------
+# ---- expected results --------------------------------------------------
 
 def test_quick_leak_is_exactly_52(runs):
     run = runs["quick_leak"]
@@ -118,7 +118,7 @@ def test_full_demo_totals(runs):
     assert 60 <= run.org_risk <= 100
 
 
-def test_full_demo_each_tool_shows_what_the_sot_says(runs):
+def test_full_demo_each_tool_shows_what_the_documented_says(runs):
     run = runs["full_demo"]
     assert {"SEC_OPENAI_KEY", "SEC_AWS_ACCESS_KEY", "SEC_AWS_SECRET_KEY"} <= set(run.rules("python3|openai"))
     support = run.rules("supportbot|anthropic")
@@ -167,7 +167,7 @@ def test_every_scenario_has_a_generator():
 
 @pytest.mark.parametrize("name", SCENARIO_NAMES)
 def test_template_holds_no_token_shaped_text(name):
-    """AT-26: fakes appear only as placeholders in anything committed."""
+    """fakes appear only as placeholders in anything committed."""
     raw = (TEMPLATE_DIR / f"{name}.jsonl").read_text(encoding="utf-8")
     without_placeholders = re.sub(r"\{\{fake:[a-z0-9_]+(?:#\d+)?\}\}", "", raw)
     assert not re.search(r"sk-|AKIA|gh[pousr]_|hf_[A-Za-z0-9]|eyJ|xox[abprs]-|://[^/\s]+:[^/\s]+@", without_placeholders)

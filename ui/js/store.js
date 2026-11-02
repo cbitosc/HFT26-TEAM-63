@@ -1,4 +1,4 @@
-// Shared data for all screens. Topics map to API reads (SOT 6.7).
+// Shared data for all screens. Topics map to API reads.
 // Live updates (SSE patching and the 3 s polling fallback) live in live.js.
 import { api } from "./api.js";
 
@@ -17,7 +17,7 @@ export const TOPICS = {
   explain: "/api/score/explain",
   evidence: "/api/evidence",
   visibility: "/api/visibility",
-  sources: "/api/sources",          // not in SOT 6.7 yet: Home monitoring list (UD-01)
+  sources: "/api/sources",          // not in the base contract yet: Home monitoring list
 };
 
 const state = new Map();       // topic -> { status: "idle"|"loading"|"ready"|"error", data, error, updatedAt }

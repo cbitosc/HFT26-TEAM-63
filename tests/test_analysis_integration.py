@@ -1,4 +1,4 @@
-"""The real analyzer inside the real pipeline and API, with nothing stubbed (SOT 4.2)."""
+"""The real analyzer inside the real pipeline and API, with nothing stubbed."""
 
 import json
 import re
@@ -106,7 +106,7 @@ def test_agent_activity_reaches_the_database(pipeline, db):
     assert used.risky and db.get_finding(used.finding_id).rule_id == "AGENT_DANGEROUS_CMD"
 
 
-# ---- AT-12, AT-35: no raw secret anywhere ----------------------------------------------------
+# ---- no raw secret anywhere ----------------------------------------------------
 
 def test_no_fake_from_the_sample_is_in_the_database_files_or_any_response(client, tmp_path):
     upload(client, SAMPLE.read_bytes())
@@ -146,7 +146,7 @@ def test_path_of_an_event_with_no_body_is_still_redacted(client):
     key = fake("github_token", 6)
     upload(client, json.dumps(record(path=f"/hook/{key}", body=None)))
     assert key not in client.get("/api/events").text
-    # Nothing readable, so no detector ran on it (SOT 2.5).
+    # Nothing readable, so no detector ran on it.
     assert client.get("/api/findings", params={"rule_id": "SEC_GITHUB_TOKEN"}).json()["total"] == 0
 
 
@@ -176,7 +176,7 @@ def test_path_is_withheld_if_it_cannot_be_checked(pipeline, db, monkeypatch):
     assert db.list_events().items[0].path == PATH_HIDDEN
 
 
-# ---- AT-10: no double counting, across requests and restarts ------------------------------------
+# ---- no double counting, across requests and restarts ------------------------------------
 
 def test_replaying_the_sample_adds_no_findings_or_alerts(client):
     first = upload(client, SAMPLE.read_bytes())
@@ -225,7 +225,7 @@ def test_reset_lets_everything_fire_again(pipeline, db):
     assert pipeline.ingest([event()], source="http_log").findings == 2
 
 
-# ---- provider-native keys, through the real catalog (AT-09) ---------------------------------------
+# ---- provider-native keys, through the real catalog ---------------------------------------
 
 def test_own_key_in_own_header_is_fine_and_another_providers_is_not(client):
     own = record(headers={"authorization": f"Bearer {fake('openai_key', 3)}"})

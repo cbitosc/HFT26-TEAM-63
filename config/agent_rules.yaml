@@ -1,4 +1,4 @@
-# Agent behavior rules (SOT 7.4). Rule ids and severities are frozen in SOT 6.5;
+# Agent behavior rules. Rule ids and severities are frozen;
 # the patterns here can be tuned. Everything is matched case-insensitively.
 #
 # Keep repeats bounded ({0,400}, not *). A pattern like curl[^|]*\| tries again at every "curl",

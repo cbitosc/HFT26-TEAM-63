@@ -1,8 +1,8 @@
-"""The detectors against what they were not written around (SOT 7.3).
+"""The detectors against what they were not written around.
 
 ``test_analysis_text`` checks the rules on values shaped to fit them. These tests come from auditing
 that: real-world secret formats, inputs built to be slow, malformed data, broken configuration and
-real text with no secrets. Every case here failed at some point. Keys are built at runtime (AT-26).
+real text with no secrets. Every case here failed at some point. Keys are built at runtime.
 """
 
 import json

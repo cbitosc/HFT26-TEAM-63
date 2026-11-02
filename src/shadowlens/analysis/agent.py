@@ -1,4 +1,4 @@
-"""Agent behavior: what a tool was given, what it did, and which of that is risky (SOT 7.4).
+"""Agent behavior: what a tool was given, what it did, and which of that is risky.
 
 Paths inside payloads are only ever strings. They are normalized here and never
 touch the filesystem.

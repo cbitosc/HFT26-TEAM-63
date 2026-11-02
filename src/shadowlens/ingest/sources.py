@@ -1,4 +1,4 @@
-"""The registry of automatic sources and what is being read from each (SOT 7.2.1, 4.5).
+"""The registry of automatic sources and what is being read from each.
 
 ``config/sources.yaml`` lists the places AI tools keep readable text. Every few seconds we check which of
 them exist on this machine, show them on the Capture screen, and, for the ones switched on, read what is
@@ -261,7 +261,7 @@ class SourceManager:
             return self._row(state)
 
     def _set_proxy(self, state: _State, enabled: bool) -> None:
-        """Start or stop the opt-in Ollama tap (SOT 7.2.2). A tap that cannot start is reported on its row."""
+        """Start or stop the opt-in Ollama tap. A tap that cannot start is reported on its row."""
         if not enabled:
             tap, self._tap, state.enabled = self._tap, None, False
             if tap is not None:

@@ -1,4 +1,4 @@
-"""Advice for an alert, from an AI model when allowed and from a template otherwise (SOT 7.7).
+"""Advice for an alert, from an AI model when allowed and from a template otherwise.
 
 The model only gives a second opinion on a finding the rules already raised. It never changes the severity,
 the score or whether an alert exists. The order for every call is: build the prompt (redacted pieces only),

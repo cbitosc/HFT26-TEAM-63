@@ -1,5 +1,5 @@
-// Agents (Frontend Design PDF p13). Capability matrix from GET /api/agents.
-// The per-agent timeline (p14) is P2 and is not built.
+// Agents. Capability matrix from GET /api/agents.
+// The per-agent timeline is not built yet.
 import { el, fmtTime, bandLabel, bandTone } from "../ui.js";
 import { watch, load } from "./util.js";
 import { ruleName } from "../rules.js";

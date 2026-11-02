@@ -56,7 +56,7 @@ def test_mask_secret_boundary_at_20():
     assert mask_secret("abcd" + "e" * 16) == "abcd... (len 20)"
 
 
-def test_mask_secret_matches_the_sot_example():
+def test_mask_secret_matches_the_documented_example():
     assert mask_secret("sk-p" + "x" * 47) == "sk-p... (len 51)"
 
 

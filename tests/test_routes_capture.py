@@ -234,7 +234,7 @@ def test_play_speed_validation(client, templates, speed):
 
 
 def test_the_quick_leak_demo_end_to_end(tmp_path, db, bus, templates):
-    """The shape of the W2 demo: a benign prompt, then a leak, and the score moves 0 -> 52."""
+    """The shape of the guided demo: a benign prompt, then a leak, and the score moves 0 -> 52."""
     def analyze(event, config, ctx):
         if "aws_secret_access_key" not in (event.body_text or ""):
             return AnalysisResult()

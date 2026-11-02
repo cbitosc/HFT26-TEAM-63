@@ -1,6 +1,6 @@
-"""Masks, hashes and placeholders: how a match may appear anywhere (SOT 6.10).
+"""Masks, hashes and placeholders: how a match may appear anywhere.
 
-No more than 4 characters of a secret may ever leave this module (AT-12).
+No more than 4 characters of a secret may ever leave this module.
 """
 
 from __future__ import annotations
@@ -13,10 +13,10 @@ from pathlib import Path
 
 SALT_BYTES = 32
 
-# Text that has already been redacted; the egress guard skips it (SOT 7.3).
+# Text that has already been redacted; the egress guard skips it.
 PLACEHOLDER_RE = re.compile(r"\[(?:REDACTED:[A-Z_]+:[0-9a-f]{12}|PII:[A-Z_]+)\]")
 
-# Rules masked as digits/IDs: "****" plus the last 4 characters (SOT 6.10).
+# Rules masked as digits/IDs: "****" plus the last 4 characters.
 _LAST4_RULES = frozenset({"PII_CREDIT_CARD", "PII_AADHAAR", "PII_SSN", "PII_PHONE", "PII_PAN", "PII_IBAN"})
 
 

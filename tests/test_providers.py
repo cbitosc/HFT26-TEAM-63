@@ -15,10 +15,10 @@ def ev(host=None, dst_ip="203.0.113.7", dst_port=443, path=None, process="python
                     dst_ip=dst_ip, dst_port=dst_port, host=host, host_basis="host_header", path=path)
 
 
-# ---- the catalog equals the SOT table ----------------------------------------
+# ---- the catalog equals the reference table ----------------------------------------
 
-# (id, category, hosts, native key rules): transcribed from SOT 7.1 independently of the YAML.
-SOT_TABLE = [
+# (id, category, hosts, native key rules): transcribed independently of the YAML.
+REFERENCE_TABLE = [
     ("openai", "cloud_llm", ["api.openai.com"], ["SEC_OPENAI_KEY"]),
     ("anthropic", "cloud_llm", ["api.anthropic.com"], ["SEC_ANTHROPIC_KEY"]),
     ("google_gemini", "cloud_llm", ["generativelanguage.googleapis.com"], ["SEC_GOOGLE_API_KEY"]),
@@ -50,9 +50,9 @@ SOT_TABLE = [
 ]
 
 
-def test_catalog_has_every_row_of_the_sot_table_in_order():
-    assert len(CATALOG.providers) == len(SOT_TABLE) == 27
-    for provider, (pid, category, hosts, native) in zip(CATALOG.providers, SOT_TABLE):
+def test_catalog_has_every_row_of_the_documented_table_in_order():
+    assert len(CATALOG.providers) == len(REFERENCE_TABLE) == 27
+    for provider, (pid, category, hosts, native) in zip(CATALOG.providers, REFERENCE_TABLE):
         assert (provider.id, provider.category.value, provider.hosts, provider.native_key_rules) == \
                (pid, category, hosts, native), pid
 
@@ -60,7 +60,7 @@ def test_catalog_has_every_row_of_the_sot_table_in_order():
 def test_regex_and_port_providers():
     assert CATALOG.get("azure_openai").host_regex == r".*\.openai\.azure\.com"
     assert CATALOG.get("aws_bedrock").host_regex == r"bedrock-runtime\.[a-z0-9-]+\.amazonaws\.com"
-    assert CATALOG.get("ollama").ports == [11434, 11435]        # 11435 is the SOT 12.2 fallback port
+    assert CATALOG.get("ollama").ports == [11434, 11435]        # 11435 is the fallback port
     assert CATALOG.get("lmstudio").ports == [1234]
     amb = CATALOG.get("local_openai_compatible")
     assert amb.ports == [8000, 8080, 5000] and amb.ports_need_path_hint is True
@@ -242,7 +242,7 @@ def test_host_and_port_both_beat_the_resolver():
 
 
 def test_a_live_scan_event_for_a_local_model_server_matches_by_port():
-    """conn_scan has no host and no path: only the address and port (AT-01)."""
+    """conn_scan has no host and no path: only the address and port."""
     e = NetEvent(id=new_id(), ts="2026-10-31T10:00:00.000Z", source="conn_scan", process="python3", pid=4123,
                  dst_ip="127.0.0.1", dst_port=11434, host_basis="port_only")
     m = classify(e, CATALOG)

@@ -1,8 +1,8 @@
-# Detector tuning (SOT 6.11). Everything here can be changed without touching code.
+# Detector tuning. Everything here can be changed without touching code.
 #
 # Each value is checked when the app starts. A missing, misspelled or out-of-range value falls
 # back to its default and is reported in the log, so a typo here can never turn detection off.
-# Rule ids and severities are frozen in SOT 6.5 and do not live here.
+# Rule ids and severities are frozen and do not live here.
 
 # ---- SEC_HIGH_ENTROPY -------------------------------------------------------------------
 entropy_alnum: 4.2                     # bits per character needed by a mixed token

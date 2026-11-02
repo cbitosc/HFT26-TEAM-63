@@ -1,4 +1,4 @@
-"""The machine inventory: real files and folders, injected only where a real machine is not wanted (SOT 4.5)."""
+"""The machine inventory: real files and folders, injected only where a real machine is not wanted."""
 
 import json
 import os
@@ -367,7 +367,7 @@ def test_one_provider_is_looked_up_once_however_many_programs(tmp_path, home):
     assert calls == ["api.anthropic.com"]
 
 
-# ---- what ShadowLens is given ------------------------------------------------------------------------------------------
+# ---- what Shadow Lens is given ------------------------------------------------------------------------------------------
 
 def test_only_confirmed_connections_become_log_lines(tmp_path, home):
     result = look(tmp_path, [CLAUDE], programs=running_claude(home),

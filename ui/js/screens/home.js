@@ -1,6 +1,6 @@
-// Home (Frontend Design PDF p4 ON, p5 OFF, p6 turn-off dialog).
-// The master switch maps to POST /api/capture/start and /stop: the design's switch has no API of its own yet (UD-01).
-// Turning on has no confirmation because none is drawn (UD-02). Loading and error states follow p9 (UD-03).
+// Home.
+// The master switch maps to POST /api/capture/start and /stop: the design's switch has no API of its own yet.
+// Turning on has no confirmation because none is drawn. Loading and error states follow p9.
 import { el, fmtNumber, fmtTime, bandLabel, pct, bandTone } from "../ui.js";
 import { openModal } from "../components/modal.js";
 import { watch, load, byNewest, cardError, alertHref, sourceDetail } from "./util.js";
@@ -32,7 +32,7 @@ export function mount(container, ctx) {
   function askTurnOff() {
     openModal({
       label: "Turn protection off?",
-      title: "ShadowLens will stop watching.",
+      title: "Shadow Lens will stop watching.",
       body: "Sources and the live scan stop, and the guard stops checking prompts. Nothing new is seen until you turn protection back on. Findings already stored stay.",
       confirmLabel: "Turn off",
       cancelLabel: "Keep on",
@@ -47,12 +47,12 @@ export function mount(container, ctx) {
       const inner = capEntry.status === "error"
         ? P.errorBlock({ message: `Could not read the protection status. ${capEntry.error.message}`, onRetry: () => store.refresh("capture") })
         : el("div", { class: "loading-text loading-text--night", role: "status" }, "Loading the protection status…");
-      return el("section", { class: "card card--night hero" }, el("div", { class: "label hero__label" }, "ShadowLens protection"), inner);
+      return el("section", { class: "card card--night hero" }, el("div", { class: "label hero__label" }, "Shadow Lens protection"), inner);
     }
     const on = isOn(cap);
     const sw = el("button", {
       class: `master${on ? " master--on" : ""}`, type: "button", role: "switch", id: "master-switch",
-      "aria-checked": String(on), "aria-label": "ShadowLens protection", disabled: busy,
+      "aria-checked": String(on), "aria-label": "Shadow Lens protection", disabled: busy,
       onClick: () => (on ? askTurnOff() : setProtection(true)),
     }, el("span", { class: "master__text", "aria-hidden": "true" }, on ? "ON" : "OFF"), el("span", { class: "master__knob", "aria-hidden": "true" }));
 
@@ -67,13 +67,12 @@ export function mount(container, ctx) {
         P.button({ label: "Turn on protection", disabled: busy, onClick: () => setProtection(true) }));
     }
     return el("section", { class: `card card--night hero${on ? "" : " hero--off"}`, "aria-labelledby": "hero-title" },
-      el("a", { class: "monolink hero__pitch", href: "#/pitch" }, "See the pitch →"),
-      el("div", { class: "label hero__label" }, "ShadowLens protection"),
+      el("div", { class: "label hero__label" }, "Shadow Lens protection"),
       el("div", { class: `master__ring${on ? " master__ring--on" : ""}` }, sw),
       el("h1", { class: "hero__title", id: "hero-title" }, on ? "Protection is ON" : "Protection is OFF"),
       el("p", { class: "hero__text" }, on
-        ? `ShadowLens is watching ${sourcesCount} source${sourcesCount === 1 ? "" : "s"} and the guard is checking prompts before they reach AI tools.`
-        : "ShadowLens is not watching. New activity is not being seen, and the guard is not checking prompts."),
+        ? `Shadow Lens is watching ${sourcesCount} source${sourcesCount === 1 ? "" : "s"} and the guard is checking prompts before they reach AI tools.`
+        : "Shadow Lens is not watching. New activity is not being seen, and the guard is not checking prompts."),
       meta);
   }
 

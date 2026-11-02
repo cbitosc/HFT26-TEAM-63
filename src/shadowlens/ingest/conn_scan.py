@@ -1,4 +1,4 @@
-"""The live process scan: which programs are talking to which servers right now (SOT 7.2).
+"""The live process scan: which programs are talking to which servers right now.
 
 ``psutil`` gives the operating system's list of open network connections. For each new
 one we emit an event with the program name, the other end's address and port, and
@@ -26,7 +26,7 @@ from ..models import HostBasis, NetEvent, ScanScope, Source, new_id, utc_now_iso
 
 log = logging.getLogger("shadowlens.conn_scan")
 
-FORGET_AFTER_S = 60.0       # SOT 7.2: a connection not seen for this long counts as new if it returns
+FORGET_AFTER_S = 60.0       # a connection not seen for this long counts as new if it returns
 ESTABLISHED = "ESTABLISHED"
 
 
@@ -123,7 +123,7 @@ class ConnectionScanner:
             if pid not in names:
                 try:
                     names[pid] = self._process_name(pid)
-                except Exception:  # noqa: BLE001 - process gone, or access denied: skip it (SOT 7.2)
+                except Exception:  # noqa: BLE001 - process gone, or access denied: skip it
                     names[pid] = None
             if names[pid] is None:
                 del self._seen[key]                              # try again next scan

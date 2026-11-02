@@ -1,4 +1,4 @@
-"""Opt-in tap for local model traffic (SOT 7.2.2).
+"""Opt-in tap for local model traffic.
 
 A tiny forwarder: clients point at ``127.0.0.1:11436``, every request and reply passes through
 to Ollama unchanged, and a copy of the request goes to the pipeline as a ``NetEvent``. It never
@@ -213,7 +213,7 @@ class OllamaTap:
             return True
         self.error = None
         # Bound here, not by uvicorn, because uvicorn exits the whole process on a busy port.
-        # No SO_REUSEADDR: on Windows it would let a second program share the port (SOT 1.2).
+        # No SO_REUSEADDR: on Windows it would let a second program share the port.
         listener = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         try:
             listener.bind((LOOPBACK_HOST, self.listen_port))
@@ -258,7 +258,7 @@ class OllamaTap:
         self.app._client = None
 
     def status(self) -> dict[str, Any]:
-        """The ``proxy`` block of ``CaptureStatus`` (SOT 6.7)."""
+        """The ``proxy`` block of ``CaptureStatus``."""
         return {
             "enabled": self.running,
             "listen_port": self.listen_port,

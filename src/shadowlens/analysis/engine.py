@@ -1,4 +1,4 @@
-"""``analyze``: everything the analysis says about one event (SOT 7.3, 7.4).
+"""``analyze``: everything the analysis says about one event.
 
 The pipeline calls ``analyze(event, config, ctx)``. Body, headers and query are only read
 here; what comes out holds masks, hashes and redacted text. Apart from loading the salt
@@ -59,7 +59,7 @@ _MAX_JSON_DEPTH = 40
 
 # Binary blobs inside AI requests: base64, and noise for the entropy rule.
 _BINARY_BLOCK_TYPES = frozenset({"image", "image_url", "input_image", "document"})
-# Skipped when flattening: the SOT excludes the model name from the entropy rule.
+# Skipped when flattening: the model name is excluded from the entropy rule.
 _SKIPPED_KEYS = frozenset({"model"})
 _JSON_ESCAPES = (("\\n", "\n"), ("\\r", "\r"), ("\\t", "\t"), ('\\"', '"'), ("\\/", "/"), ("\\\\", "\\"))
 _PLAIN_FIELD_NAME_RE = re.compile(r"^[A-Za-z_][A-Za-z0-9_\-]{0,31}$")
@@ -79,7 +79,7 @@ class DetectorFailure(RuntimeError):
 
 @dataclass
 class AnalysisResult:
-    """The shape the pipeline reads (SOT 7.3). ``failed`` names the parts that could not run."""
+    """The shape the pipeline reads. ``failed`` names the parts that could not run."""
 
     findings: list[Finding] = field(default_factory=list)
     agent_activity: list[AgentActivity] = field(default_factory=list)
@@ -166,7 +166,7 @@ def redact_path(path: str, cfg: Any) -> str:
 
 
 def _scan_auth_header(value: str, native_key_rules: Iterable[str], settings: AnalysisSettings) -> list[TextFinding]:
-    """Named patterns only, never entropy (SOT 7.1)."""
+    """Named patterns only, never entropy."""
     credential = clean_text(value).strip()
     for scheme in _AUTH_SCHEMES:
         if credential.lower().startswith(scheme):
@@ -355,7 +355,7 @@ def analyze(event: NetEvent, cfg: Any, ctx: AgentSessionContext,
 
 
 def is_safe_to_send(text: str, cfg: Any) -> bool:
-    """The egress guard (SOT 7.7): may this text leave the machine?
+    """The egress guard: may this text leave the machine?
 
     Fails closed. If anything goes wrong, or any detector did not run, the answer is no.
     """
@@ -368,7 +368,7 @@ def is_safe_to_send(text: str, cfg: Any) -> bool:
 
 
 def preview(text: str, mode: str, cfg: Any) -> dict[str, Any]:
-    """The analysis part of ``POST /api/analyze/preview`` (SOT 6.7). Nothing is stored or remembered.
+    """The analysis part of ``POST /api/analyze/preview``. Nothing is stored or remembered.
 
     One row per match, so the UI can highlight each. Agent findings have no position in the
     text, so their span is ``[0, 0]``. ``redacted_text`` is what the model would receive, and

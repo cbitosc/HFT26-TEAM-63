@@ -22,7 +22,7 @@ export function showSplash() {
   const node = el("div", { class: `splash${reduced ? " splash--still" : ""}`, "aria-hidden": "true" },
     el("div", { class: "splash__field" }),
     el("div", { class: "splash__glow" }),
-    el("div", { class: "splash__center" }, mark, el("div", { class: "splash__word" }, "ShadowLens")));
+    el("div", { class: "splash__center" }, mark, el("div", { class: "splash__word" }, "Shadow Lens")));
   document.body.append(node);
 
   const hold = reduced ? 600 : 1400;

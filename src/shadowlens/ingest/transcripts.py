@@ -1,4 +1,4 @@
-"""Read what an AI tool saved about its conversations (SOT 7.2.1, ``transcript`` source).
+"""Read what an AI tool saved about its conversations.
 
 Claude Code writes every session to ``~/.claude/projects/<project>/<session>.jsonl``, one JSON object per
 line. A line is a message the user typed, a file or command output handed back to the model, or something

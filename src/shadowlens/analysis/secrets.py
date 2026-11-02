@@ -1,4 +1,4 @@
-"""Secret detectors: named patterns, assignments and entropy (SOT 7.3).
+"""Secret detectors: named patterns, assignments and entropy.
 
 The patterns stay in code because each is tied to the check that follows it. Thresholds and word
 lists are in ``config/rules.yaml``. See ``docs/DETECTORS.md`` for why each rule is shaped as it is.
@@ -26,7 +26,7 @@ PRIVATE_KEY_RE = re.compile(
     rf"(?:{_BREAK}+[A-Za-z0-9+/=]{{16,}})*"
     rf"(?:{_BREAK}*-----END [A-Z ]*PRIVATE KEY(?: BLOCK)?-----)?"
 )
-# These end in a lookahead, not the SOT's \b: a key can end in "/", "+", "=" or "-", and \b would
+# These end in a lookahead, not a plain \b: a key can end in "/", "+", "=" or "-", and \b would
 # then fail against the following space, losing the secret.
 AWS_SECRET_RE = re.compile(
     r"(?i)(?<![A-Za-z0-9])(?:aws[_\-]?secret[_\-]?(?:access[_\-]?)?key|secret[_\-]?access[_\-]?key)\b"
@@ -54,7 +54,7 @@ NAMED_PATTERNS: dict[str, re.Pattern[str]] = {
     ),
 }
 
-# Tokens with a clear prefix whose vendor has no rule of its own in the frozen catalog (SOT 6.5). They are
+# Tokens with a clear prefix whose vendor has no rule of its own in the frozen catalog. They are
 # reported as SEC_GENERIC_ASSIGNMENT, "possible secret".
 VENDOR_PATTERNS: tuple[re.Pattern[str], ...] = tuple(re.compile(p) for p in (
     r"\bdo[por]_v1_[a-f0-9]{64}\b",                               # DigitalOcean
@@ -211,7 +211,7 @@ def _entropy_score(token: str, before: str, settings: AnalysisSettings) -> float
 
 
 def find_named_secrets(text: str) -> list[Candidate]:
-    """Patterns with a recognizable shape. Headers use only these (SOT 7.1)."""
+    """Patterns with a recognizable shape. Headers use only these."""
     found: list[Candidate] = []
     if not _NAMED_PREFILTER_RE.search(text):         # the common case: one scan instead of twelve
         return found

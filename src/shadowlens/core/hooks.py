@@ -1,8 +1,7 @@
-"""Optional pieces that Saleha's modules provide, found by name at the moment they are needed.
+"""Optional pieces that the analysis modules provide, found by name at the moment they are needed.
 
 Looking them up when needed means the app still starts if one is missing, and the feature that
-needs it answers "not installed yet" instead of crashing. The contracts (see
-docs/ANALYSIS_INTEGRATION.md):
+needs it answers "not installed yet" instead of crashing. The contracts:
 
     shadowlens.analysis.analyze(event, config, ctx)      -> findings + agent activity
     shadowlens.analysis.preview(text, mode, config)      -> {findings, redacted_text, would_block}   (Leak Lab)

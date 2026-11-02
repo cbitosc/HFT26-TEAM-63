@@ -1,5 +1,5 @@
-/* ShadowLens UI. Design tokens and shared components.
-   Sources: Brand Guidelines (pp. 11-15, 25-26) for tokens; Frontend Design PDF p. 3 for components.
+/* Shadow Lens UI. Design tokens and shared components.
+   Design tokens and shared components.
    Values marked "measured" were read off the 2160x1350 page images (1.5x of the 1440x900 artboard).
    No framework, no build step. */
 @import url("fonts/fonts.css");
@@ -29,7 +29,7 @@
   --font-sans: "Hanken Grotesk", system-ui, sans-serif;
   --font-mono: "IBM Plex Mono", ui-monospace, monospace;
 
-  /* sizes read off the screens PDF. Brand minimums are 12 px mono labels and 14 px UI text (conflict C-04):
+  /* sizes: minimums are 12 px mono labels and 14 px UI text:
      set --fs-label: 12px and --fs-ui: 14px to follow the brand instead. */
   --fs-label: 11px;
   --fs-ui: 13px;
@@ -72,7 +72,7 @@ h1, h2, h3, p { margin: 0; }
   font-family: var(--font-mono); font-size: var(--fs-label); line-height: 16px; font-weight: 500;
   letter-spacing: 0.1em; text-transform: uppercase; color: var(--slate);
 }
-:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }  /* focus ring is not specified (UD-12); this is a placeholder */
+:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }  /* focus ring is not specified; this is a placeholder */
 .visually-hidden {
   position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden;
   clip: rect(0 0 0 0); white-space: nowrap; border: 0;
@@ -270,7 +270,7 @@ input.input { color: var(--ink); }
 .logo__word { font: 700 20px/24px var(--font-sans); letter-spacing: -0.025em; }
 .logo--night { color: var(--paper); }
 
-/* ---------- 9. Shell (Frontend Design PDF p. 4: global bar, status strip) ---------- */
+/* ---------- 9. Shell ---------- */
 .shell { min-height: 100vh; display: flex; flex-direction: column; }
 .gbar {
   height: 56px; background: var(--night); color: var(--paper);
@@ -362,7 +362,7 @@ input.input { color: var(--ink); }
 /* soft teal for the events series on the timeline; measured off p7, not a brand token */
 :root { --teal-soft: #A7CFCB; }
 
-/* ---------- 11. Confirmation dialog (p6) ---------- */
+/* ---------- 11. Confirmation dialog ---------- */
 .scrim { position: fixed; inset: 0; z-index: 100; background: rgba(14, 21, 27, 0.45); display: flex; align-items: center; justify-content: center; padding: 16px; }
 .modal { width: 576px; max-width: 100%; background: var(--white); color: var(--ink); padding: 28px; box-shadow: var(--shadow-toast); }
 .modal__title { margin-top: 14px; font: 700 26px/32px var(--font-sans); letter-spacing: -0.01em; }
@@ -471,7 +471,7 @@ input.input { color: var(--ink); }
   .ov-top > .ov-risk { grid-column: 1 / -1; }
 }
 
-/* ---------- 14. Alerts (p10) and detail panel (p11) ---------- */
+/* ---------- 14. Alerts and detail panel ---------- */
 .filters { display: flex; align-items: center; flex-wrap: wrap; gap: 12px 18px; margin-bottom: 20px; }
 .filters .chip { height: 26px; padding: 0 10px; font-size: 13px; }
 .filters__label { font: 500 var(--fs-label)/16px var(--font-mono); letter-spacing: 0.1em; text-transform: uppercase; color: var(--slate); margin-left: 6px; }
@@ -530,7 +530,7 @@ input.input { color: var(--ink); }
 .panel__closealert { display: inline-flex; flex-direction: column; align-items: flex-start; gap: 2px; }
 .panel__hint { font: 400 11px/14px var(--font-mono); color: var(--slate); }
 
-/* ---------- 15. Leak Lab (p12) ---------- */
+/* ---------- 15. Leak Lab ---------- */
 .screen-head--row { flex-direction: row; justify-content: space-between; align-items: flex-end; gap: 16px; flex-wrap: wrap; }
 .head-note { font: 400 14px/20px var(--font-mono); color: var(--slate); }
 .lab { display: grid; grid-template-columns: 753fr 619fr; gap: 19px; align-items: start; }
@@ -568,7 +568,7 @@ input.input { color: var(--ink); }
 .lab__risksub { font: 400 13px/18px var(--font-mono); color: var(--slate); }
 @media (max-width: 1100px) { .lab { grid-template-columns: 1fr; } }
 
-/* ---------- 16. Agents (p13) and Providers (p15) ---------- */
+/* ---------- 16. Agents and Providers ---------- */
 .legend { display: flex; align-items: center; gap: 12px 30px; flex-wrap: wrap; margin-bottom: 20px; font-size: 14px; }
 .legend > span { display: inline-flex; align-items: center; gap: 6px; }
 .legend .label { margin-right: 4px; }
@@ -681,7 +681,7 @@ input.input { color: var(--ink); }
 .splash--still .splash__edge { transform: none; }
 @media (prefers-reduced-motion: reduce) { .splash { transition-duration: 0.2s; } }
 
-/* ---------- 19. Exposure graph (p8) ---------- */
+/* ---------- 19. Exposure graph ---------- */
 .xg { display: grid; grid-template-columns: 1012fr 330fr; gap: 19px; align-items: start; }
 .xg > * { min-width: 0; }
 .xg-card { min-height: 560px; }
@@ -754,9 +754,8 @@ input.input { color: var(--ink); }
 
 .table.cmp .mono-cell { color: var(--slate); }
 
-/* ---------- 21. Pitch entry on Home (the pitch itself lives in pitch.css) ---------- */
+/* ---------- 21. Hero ---------- */
 .hero { position: relative; }
-.hero .hero__pitch { position: absolute; top: 24px; right: 24px; color: var(--night-muted); }
 
 /* ---------- 22. Microinteractions (motion pass) ---------- */
 .btn { transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease, transform 0.1s ease; }
@@ -785,7 +784,7 @@ input.input { color: var(--ink); }
 .xgraph__box { transition: fill 0.15s ease, stroke-width 0.12s ease; }
 .monolink, .linkbtn { transition: color 0.15s ease, text-decoration-color 0.15s ease; }
 .monolink:hover { color: var(--teal); }
-.card--night .monolink:hover, .hero .hero__pitch:hover { color: var(--teal-dark); }
+.card--night .monolink:hover { color: var(--teal-dark); }
 .master { transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease; }
 .master__knob { transition: left 0.3s cubic-bezier(0.3, 0, 0.2, 1), right 0.3s cubic-bezier(0.3, 0, 0.2, 1), background-color 0.25s ease; }
 .src__copy:hover { color: var(--teal); }
@@ -803,7 +802,7 @@ input.input { color: var(--ink); }
 /* ---------- 23. Semantic colours (status, severity, risk) ----------
    Red: critical or high, failed, blocked. Amber: medium, needs attention. Green: low, safe, resolved, passed.
    Neutral stays for information and inactive states. Text contrast is 4.5:1 or more on paper, white, tint and night.
-   Note: the brand guide (p13) says no traffic-light colours; this pass follows the explicit product request. */
+   Note: the brand guide says no traffic-light colours; this pass follows the explicit product request. */
 :root {
   --sev-red: #B3261E;        --sev-red-bg: #FBE8E6;   --sev-red-dark: #EF5A4F;
   --sev-amber: #8F5300;      --sev-amber-bg: #FBF0DC; --sev-amber-dark: #F2B13B;

@@ -1,5 +1,5 @@
-// Alerts (Frontend Design PDF p10) and the alert detail panel (p11).
-// Close alert has no endpoint yet, so it is shown disabled (UD-18). Findings mode lists /api/findings.
+// Alerts and the alert detail panel.
+// Close alert has no endpoint yet, so it is shown disabled. Findings mode lists /api/findings.
 import { el, fmtTime, fmtNumber, sevTone } from "../ui.js";
 import { watch, load, byNewest, namer } from "./util.js";
 import { ruleName, owaspName, sourceName } from "../rules.js";
@@ -58,7 +58,7 @@ export function mount(container, ctx) {
     el("header", { class: "screen-head" }, el("h1", { class: "h2" }, "Alerts"), el("p", { class: "small" }, "Everything that was flagged, newest first.")),
     bar, providerNote, tableBox, foot);
 
-  /* Select-style dropdown with a "Any" option. Contents are not drawn in the design (UD-19). */
+  /* Select-style dropdown with a "Any" option. Contents are not drawn in the design. */
   function dropdown(label, options, onPick) {
     const text = el("span", {}, label);
     const trigger = el("button", { class: "input filters__select", type: "button", "aria-haspopup": "listbox" }, text, el("span", { "aria-hidden": "true", class: "caret" }, "▾"));

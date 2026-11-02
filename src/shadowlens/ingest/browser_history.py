@@ -1,4 +1,4 @@
-"""Which AI websites are open in the browser (SOT 2.8: browser traffic is HTTPS, so this is metadata only).
+"""Which AI websites are open in the browser.
 
 Browsers keep a local history database of every page visited: address and time. We read a COPY of it (the
 browser keeps the original locked) and turn each visit to an AI site into a ``metadata_only`` event whose

@@ -1,4 +1,4 @@
-// Leak Lab (Frontend Design PDF p12). Text is sent to the local service only (POST /api/analyze/preview), 250 ms after typing stops.
+// Leak Lab. Text is sent to the local service only (POST /api/analyze/preview), 250 ms after typing stops.
 // Sample buttons fetch fake inputs from GET /api/analyze/samples, so no token-shaped text lives in the UI code.
 import { el } from "../ui.js";
 

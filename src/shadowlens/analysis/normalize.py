@@ -1,4 +1,4 @@
-"""A plain view of text for detection, with an exact way back to the original (SOT 7.3).
+"""A plain view of text for detection, with an exact way back to the original.
 
 Anyone can dress a secret up so a pattern does not recognize it: fullwidth letters, zero-width characters
 inside the key, look-alike letters from another alphabet, or ``\\u0073``, ``%73`` and ``&#115;`` written

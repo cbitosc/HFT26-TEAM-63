@@ -1,12 +1,11 @@
 // Shared UI primitives. Each function returns a DOM node. Styles live in app.css.
-// Design reference: Frontend Design PDF p. 3 (components), Brand Guidelines p. 15, 25, 26.
 import { el, svg, pct } from "../ui.js";
 
 /* ---------- Logo (brand p26, "the mark as code") ---------- */
 export function logoMark({ size = 32, night = false } = {}) {
   const small = size < 24;                       // small cut under 24 px
   const edge = night ? "#3FC1B8" : "#0B7A75";
-  const node = svg("svg", { viewBox: "0 0 64 64", width: size, height: size, role: "img", "aria-label": "ShadowLens" },
+  const node = svg("svg", { viewBox: "0 0 64 64", width: size, height: size, role: "img", "aria-label": "Shadow Lens" },
     svg("path", { d: small ? "M32 7A25 25 0 0 0 32 57Z" : "M32 6A26 26 0 0 0 32 58Z", fill: "currentColor" }),
     svg("circle", { cx: 32, cy: 32, r: small ? 25 : 26, fill: "none", stroke: "currentColor", "stroke-width": small ? 7 : 5 }),
     small
@@ -21,7 +20,7 @@ export function logo({ night = false, size = 28 } = {}) {
   mark.removeAttribute("role");
   mark.removeAttribute("aria-label");
   return el("span", { class: `logo${night ? " logo--night" : ""}` },
-    mark, el("span", { class: "logo__word" }, "ShadowLens"));
+    mark, el("span", { class: "logo__word" }, "Shadow Lens"));
 }
 
 /* ---------- Buttons ---------- */
@@ -71,7 +70,7 @@ export function searchInput({ placeholder = "Search", value = "", onInput } = {}
   return input;
 }
 
-/** Select-style trigger ("Tool ▾"). Option lists are not drawn in the design (UD-19). */
+/** Select-style trigger ("Tool ▾"). Option lists are not drawn in the design. */
 export function selectButton({ label, onClick } = {}) {
   return el("button", { class: "input", type: "button", "aria-haspopup": "listbox", onClick },
     el("span", {}, label), el("span", { "aria-hidden": "true", style: "font-size:10px;margin-left:8px" }, "▾"));
@@ -149,7 +148,7 @@ export function banner(text, { right } = {}) {
     el("span", {}, text), right ? el("span", { class: "mono" }, right) : null);
 }
 
-/** Error with a Retry action. Text states what failed (design p9: "Could not load alerts. The local service did not respond."). */
+/** Error with a Retry action. Text states what failed. */
 export function errorBlock({ message, onRetry } = {}) {
   return el("div", { class: "state-block", role: "alert" },
     el("div", { class: "error-box" }, message),

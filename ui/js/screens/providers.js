@@ -1,4 +1,4 @@
-// Providers (Frontend Design PDF p15). Approve or unapprove with PUT /api/providers/{id}/sanction;
+// Providers. Approve or unapprove with PUT /api/providers/{id}/sanction;
 // the result card shows the risk change the server returned.
 import { el, fmtNumber, fmtTime, bandLabel, bandTone } from "../ui.js";
 import { watch, load } from "./util.js";

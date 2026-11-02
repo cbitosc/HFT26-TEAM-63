@@ -1,4 +1,4 @@
-"""Source code and confidentiality markers (SOT 7.3). At most one finding per rule, per event."""
+"""Source code and confidentiality markers. At most one finding per rule, per event."""
 
 from __future__ import annotations
 

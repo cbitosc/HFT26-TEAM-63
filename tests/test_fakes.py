@@ -8,7 +8,7 @@ import pytest
 from shadowlens.analysis.checksums import iban_valid, luhn_valid, verhoeff_valid
 from shadowlens.fakes import KINDS, expand, fake
 
-# The detector patterns from SOT 7.3. Replace with imports once the detectors exist.
+# The detector patterns. Replace with imports once the detectors exist.
 PATTERNS = {
     "private_key_header": r"-----BEGIN (?:RSA |EC |DSA |OPENSSH |PGP |ENCRYPTED )?PRIVATE KEY(?: BLOCK)?-----",
     "aws_access_key": r"\b(?:AKIA|ASIA)[0-9A-Z]{16}\b",
@@ -49,7 +49,7 @@ def _entropy(value):
     return -sum(n / len(value) * log2(n / len(value)) for n in Counter(value).values())
 
 
-def test_all_sot_kinds_exist():
+def test_all_documented_kinds_exist():
     assert KINDS == {
         "openai_key", "anthropic_key", "aws_access_key", "aws_secret_key", "github_token", "slack_token",
         "google_key", "hf_token", "stripe_key", "jwt", "private_key_header", "db_url", "card_visa", "card_mc",
@@ -98,7 +98,7 @@ def test_jwt_header_decodes_to_json_with_alg(idx):
     assert "alg" in json.loads(base64.urlsafe_b64decode(header + "=" * (-len(header) % 4)))
 
 
-def test_openai_key_length_matches_the_sot_example():
+def test_openai_key_length_matches_the_documented_example():
     assert len(fake("openai_key")) == 51
 
 
@@ -139,7 +139,7 @@ def test_expand_keeps_unknown_kinds():
     assert expand("{{fake:nope#1}}") == "{{fake:nope#1}}"
 
 
-# ---- the source file itself holds no token-shaped literal (AT-26) ------------
+# ---- the source file itself holds no token-shaped literal ------------
 
 def test_fakes_source_has_no_token_shaped_literal():
     source = (Path(__file__).resolve().parents[1] / "src" / "shadowlens" / "fakes.py").read_text(encoding="utf-8")

@@ -1,9 +1,9 @@
-"""Data models for ShadowLens: the frozen contracts in SOT section 6.
+"""Data models for Shadow Lens: the frozen contracts.
 
-Field names and allowed values are exactly the ones in the SOT. Changing one
-here means changing the SOT in the same PR (SOT 0.3).
+Field names and allowed values are exactly the ones the API documents. Changing one
+here changes the API contract.
 
-Conventions (SOT 6.1): JSON names are snake_case; timestamps are ISO-8601 UTC
+Conventions: JSON names are snake_case; timestamps are ISO-8601 UTC
 ending in ``Z``; ids are lowercase UUID4 strings; ``null`` only where a type
 says ``| null``.
 
@@ -59,7 +59,7 @@ def utc_now_iso() -> str:
 
 
 def make_tool_id(process: str | None, provider_id: str) -> str:
-    """``"<process lowercased or unknown>|<provider_id>"``, e.g. ``python3|openai`` (SOT 6.4)."""
+    """``"<process lowercased or unknown>|<provider_id>"``, e.g. ``python3|openai``."""
     return f"{(process or 'unknown').strip().lower() or 'unknown'}|{provider_id}"
 
 
@@ -70,7 +70,7 @@ class ShadowModel(BaseModel):
 
 
 # --------------------------------------------------------------------------
-# Vocabulary (the allowed values in SOT 6.2 to 6.7)
+# Vocabulary (the allowed values)
 # --------------------------------------------------------------------------
 
 class Source(StrEnum):
@@ -124,7 +124,7 @@ _SEVERITY_RANK = {"info": 0, "low": 1, "medium": 2, "high": 3, "critical": 4}
 
 
 class Band(StrEnum):
-    """Risk band for a tool or the whole organization (SOT 6.7)."""
+    """Risk band for a tool or the whole organization."""
 
     LOW = "low"            # 0-24
     MODERATE = "moderate"  # 25-49
@@ -133,7 +133,7 @@ class Band(StrEnum):
 
 
 class Category(StrEnum):
-    """Provider category (SOT 6.4)."""
+    """Provider category."""
 
     CLOUD_LLM = "cloud_llm"
     LOCAL_LLM = "local_llm"
@@ -171,7 +171,7 @@ class LocationField(StrEnum):
     TOOL_RESULT = "tool_result"
 
 
-# Rule ids from the catalog in SOT 6.5 (IDs are frozen). The prefix decides the
+# Rule ids from the catalog (IDs are frozen). The prefix decides the
 # finding category.
 RULE_IDS: frozenset[str] = frozenset({
     # secrets
@@ -209,10 +209,10 @@ def category_for_rule(rule_id: str) -> FindingCategory:
 
 
 # --------------------------------------------------------------------------
-# NetEvent (SOT 6.2): one observed network event, produced by ingest
+# NetEvent: one observed network event, produced by ingest
 # --------------------------------------------------------------------------
 
-# Only these headers are ever kept (SOT 6.2). Everything else (cookies, etc.) is dropped.
+# Only these headers are ever kept. Everything else (cookies, etc.) is dropped.
 HEADER_WHITELIST: frozenset[str] = frozenset({
     "host", "content-type", "user-agent", "authorization",
     "x-api-key", "x-goog-api-key", "x-shadow-client",
@@ -220,7 +220,7 @@ HEADER_WHITELIST: frozenset[str] = frozenset({
 
 
 class NetEvent(ShadowModel):
-    """Body and headers live in memory only; they are never stored (SOT 6.9)."""
+    """Body and headers live in memory only; they are never stored."""
 
     id: Uuid4
     ts: Timestamp
@@ -248,7 +248,7 @@ class NetEvent(ShadowModel):
     @classmethod
     def _normalize_process(cls, value: str | None) -> str | None:
         """Lowercase, and drop a trailing ``.exe`` so Windows names match everywhere
-        (``Claude.EXE`` becomes ``claude``, SOT 1.2)."""
+        (``Claude.EXE`` becomes ``claude``)."""
         if value is None:
             return None
         name = value.strip().lower()
@@ -299,12 +299,12 @@ class NetEvent(ShadowModel):
     @computed_field  # type: ignore[prop-decorator]
     @property
     def visibility(self) -> Visibility:
-        """``full`` exactly when ``body_text`` is a non-empty string (SOT 6.2)."""
+        """``full`` exactly when ``body_text`` is a non-empty string."""
         return Visibility.FULL if self.body_text else Visibility.METADATA_ONLY
 
 
 # --------------------------------------------------------------------------
-# ProviderMatch (SOT 6.4): which AI provider an event talks to
+# ProviderMatch: which AI provider an event talks to
 # --------------------------------------------------------------------------
 
 class ProviderMatch(ShadowModel):
@@ -324,7 +324,7 @@ class ProviderMatch(ShadowModel):
 
 
 # --------------------------------------------------------------------------
-# Finding (SOT 6.5): one thing a rule found
+# Finding: one thing a rule found
 # --------------------------------------------------------------------------
 
 class Location(ShadowModel):
@@ -351,7 +351,7 @@ class FindingMeta(ShadowModel):
 
 
 class Finding(ShadowModel):
-    """Points are never stored; they are computed at read time (SOT 7.5)."""
+    """Points are never stored; they are computed at read time."""
 
     id: Uuid4
     event_id: Uuid4
@@ -430,7 +430,7 @@ class ActivityKind(StrEnum):
 
 
 def band_for_score(score: int) -> Band:
-    """The risk band for a 0-100 score (SOT 6.7): 0-24 low, 25-49 moderate, 50-74 high, 75-100 critical."""
+    """The risk band for a 0-100 score: 0-24 low, 25-49 moderate, 50-74 high, 75-100 critical."""
     if not 0 <= score <= 100:
         raise ValueError("score must be between 0 and 100")
     if score < 25:
@@ -447,7 +447,7 @@ def _parse_ts(value: str) -> datetime:
 
 
 # --------------------------------------------------------------------------
-# Remediation (SOT 6.6): advice for one alert, from the AI model or a template
+# Remediation: advice for one alert, from the AI model or a template
 # --------------------------------------------------------------------------
 
 class Remediation(ShadowModel):
@@ -479,7 +479,7 @@ class Remediation(ShadowModel):
 
 
 # --------------------------------------------------------------------------
-# Alert (SOT 6.6): a finding worth showing the admin
+# Alert: a finding worth showing the admin
 # --------------------------------------------------------------------------
 
 class Alert(ShadowModel):
@@ -523,7 +523,7 @@ class Alert(ShadowModel):
 
 
 # --------------------------------------------------------------------------
-# Agent capabilities and activity (SOT 6.6)
+# Agent capabilities and activity
 # --------------------------------------------------------------------------
 
 class Capability(ShadowModel):
@@ -562,7 +562,7 @@ class AgentActivity(ShadowModel):
 
 
 # --------------------------------------------------------------------------
-# Tool (SOT 6.6): one (process, provider) pair, with its computed risk
+# Tool: one (process, provider) pair, with its computed risk
 # --------------------------------------------------------------------------
 
 class FindingCounts(ShadowModel):
@@ -611,14 +611,14 @@ class Tool(ShadowModel):
 
 
 # ==========================================================================
-# Part C: API response shapes (SOT 6.7) and the small request bodies
+# Part C: API response shapes and the small request bodies
 # ==========================================================================
 
 T = TypeVar("T")
 
 
 def _check_risk_triplet(org_risk: int, compliance_score: int, band: Band) -> None:
-    """Shared rule: compliance = 100 - org_risk, and the band follows org_risk (SOT 7.5)."""
+    """Shared rule: compliance = 100 - org_risk, and the band follows org_risk."""
     if compliance_score != 100 - org_risk:
         raise ValueError("compliance_score must equal 100 - org_risk")
     if band != band_for_score(org_risk):
@@ -626,7 +626,7 @@ def _check_risk_triplet(org_risk: int, compliance_score: int, band: Band) -> Non
 
 
 class Page(ShadowModel, Generic[T]):
-    """List envelope used by every list route: ``{"items": [...], "total": N}`` (SOT 6.1)."""
+    """List envelope used by every list route: ``{"items": [...], "total": N}``."""
 
     items: list[T]
     total: int = Field(ge=0)
@@ -1274,7 +1274,7 @@ class SourceUpdateRequest(ShadowModel):
     backfill: bool = False
 
 
-# ---- live "score changed" message (SOT 6.8) ----------------------------------
+# ---- live "score changed" message ----------------------------------
 
 class ScoreUpdate(ShadowModel):
     """Payload of the ``score.update`` stream message: the new headline score and the top tool."""

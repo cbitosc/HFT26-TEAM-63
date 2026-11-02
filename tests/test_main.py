@@ -172,12 +172,12 @@ def fake_webview(start_error=None, create_error=None):
     return mod, calls
 
 
-def test_open_window_uses_the_sot_window_settings(monkeypatch):
+def test_open_window_uses_the_documented_window_settings(monkeypatch):
     mod, calls = fake_webview()
     monkeypatch.setitem(sys.modules, "webview", mod)
     assert desktop.open_window("http://127.0.0.1:8787") is True
     args, kwargs = calls["create"]
-    assert args == ("ShadowLens", "http://127.0.0.1:8787")
+    assert args == ("Shadow Lens", "http://127.0.0.1:8787")
     assert (kwargs["width"], kwargs["height"], kwargs["min_size"]) == (1360, 860, (1100, 700))
     assert calls["start"] == {"debug": False}           # no devtools in production
 

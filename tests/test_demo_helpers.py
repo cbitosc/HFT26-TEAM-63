@@ -1,6 +1,6 @@
-"""The live demo helpers, over real sockets and real files (SOT 8.3).
+"""The live demo helpers, over real sockets and real files.
 
-``reader_body`` below is a small copy of the transcript reader rule in SOT 7.2.1, until the
+``reader_body`` below is a small copy of the transcript reader rule, until the
 real reader exists. Swap it for the real one then.
 """
 
@@ -139,7 +139,7 @@ def test_oversized_body_is_refused():
 
 
 def test_second_server_on_the_same_port_is_refused(server):
-    """SOT 1.2: on Windows, address reuse would quietly let two programs share the port."""
+    """On Windows, address reuse would quietly let two programs share the port."""
     with pytest.raises(OSError):
         MockOllamaServer(port_of(server), None)
 
@@ -245,7 +245,7 @@ def test_agent_sim_reports_a_closed_port(capsys):
 # ---- transcripts ---------------------------------------------------------------------
 
 def reader_body(raw_line):
-    """SOT 7.2.1: user text and tool results, assistant tool calls only; assistant prose is dropped."""
+    """User text and tool results, assistant tool calls only; assistant prose is dropped."""
     data = json.loads(raw_line)
     message = data.get("message")
     if not isinstance(message, dict):
@@ -298,7 +298,7 @@ def test_sim_lines_appear_one_at_a_time(tmp_path):
     assert early < 3 and len(path.read_text(encoding="utf-8").splitlines()) == 3
 
 
-def test_sim_output_gives_the_three_w5_findings(tmp_path):
+def test_sim_output_gives_the_three_remote_findings(tmp_path):
     path = transcript_sim.run(tmp_path, interval=0)
     findings, activity = analyze_transcript(path.read_text(encoding="utf-8").splitlines())
     rules = {finding.rule_id for finding in findings}
@@ -318,7 +318,7 @@ def test_sim_main_uses_its_arguments(tmp_path, capsys):
     assert len(list(target.glob("*.jsonl"))) == 1
 
 
-# ---- AT-28: the sample transcript --------------------------------------------------------
+# ---- the sample transcript --------------------------------------------------------
 
 SAMPLE = REPO_ROOT / "fixtures" / "sample_claude_transcript.jsonl"
 
@@ -347,7 +347,7 @@ def test_at28_assistant_prose_and_thinking_create_no_finding():
 
 
 def test_sample_file_holds_only_placeholders():
-    """AT-26."""
+    """The simulator output holds no token-shaped literal."""
     assert find_named_secrets(SAMPLE.read_text(encoding="utf-8")) == []
     assert "{{fake:openai_key#61}}" in SAMPLE.read_text(encoding="utf-8")
 

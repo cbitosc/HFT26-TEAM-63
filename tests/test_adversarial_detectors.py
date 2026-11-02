@@ -1,4 +1,4 @@
-"""Attacks on the secret, personal-data and code detectors (SOT 7.3).
+"""Attacks on the secret, personal-data and code detectors.
 
 Each table is a way someone might hide a value from a pattern: look-alike or invisible characters, escapes,
 encodings, breaks inside the value, unusual phrasing. Values come from ``fakes`` at run time, so the repo holds

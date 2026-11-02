@@ -1,4 +1,4 @@
-// Toast host. Stack at top right over page content (design p3). Duration and stack size are not specified (UD-07):
+// Toast host. Stack at top right over page content. Duration and stack size are not specified:
 // alert and info toasts close after 8 s, error toasts stay until closed, at most 3 are shown.
 import { el } from "./ui.js";
 import { toast as makeToast } from "./components/primitives.js";

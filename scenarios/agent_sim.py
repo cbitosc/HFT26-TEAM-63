@@ -1,4 +1,4 @@
-"""A fake program leaking a key to a local model, over real sockets (SOT 8.3).
+"""A fake program leaking a key to a local model, over real sockets.
 
     python -m scenarios.agent_sim [--port 11434]
 

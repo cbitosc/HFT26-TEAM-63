@@ -1,4 +1,4 @@
-"""Compliance and evidence (SOT 6.7): ``GET /api/compliance``, ``GET /api/evidence``."""
+"""Compliance and evidence: ``GET /api/compliance``, ``GET /api/evidence``."""
 
 from __future__ import annotations
 
@@ -21,7 +21,7 @@ EVIDENCE_FILE = "evidence.json"
 
 
 def evidence_path(config: Config) -> Path:
-    """Where ``python -m shadowlens.eval.run`` writes its result: next to the database (SOT 8.5)."""
+    """Where ``python -m shadowlens.eval.run`` writes its result: next to the database."""
     return config.db_path.parent / EVIDENCE_FILE
 
 

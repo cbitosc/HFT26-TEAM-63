@@ -1,4 +1,4 @@
-"""Routes about the app itself (SOT 6.7): health."""
+"""Routes about the app itself: health."""
 
 from __future__ import annotations
 

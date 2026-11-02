@@ -1,4 +1,4 @@
-"""Runtime configuration for ShadowLens (SOT section 5.4).
+"""Runtime configuration for Shadow Lens.
 
 Everything the app can be configured with is read here, once, into one
 immutable ``Config`` object. Other modules receive the object; they never read
@@ -26,7 +26,7 @@ log = logging.getLogger("shadowlens.config")
 _TRUE = {"1", "true", "yes", "on"}
 _FALSE = {"0", "false", "no", "off"}
 
-# The server binds to loopback only (SOT 2.5 principle 4, AT-21).
+# The server binds to loopback only.
 LOOPBACK_HOST = "127.0.0.1"
 
 
@@ -135,7 +135,7 @@ def _resolve_path(value: str, base_dir: Path) -> Path:
 
     ``~`` expands to the user's home folder; relative paths are relative to the
     project folder. (Paths found inside AI payloads are different: they are only
-    ever strings and never go through here, SOT 1.2.)
+    ever strings and never go through here.)
     """
     path = Path(value).expanduser()
     return path if path.is_absolute() else (base_dir / path)
@@ -159,7 +159,7 @@ class Config:
 
     # Analysis
     max_body_bytes: int
-    workspace_roots: tuple[str, ...]  # kept as strings: normalized like payload paths (SOT 7.4)
+    workspace_roots: tuple[str, ...]  # kept as strings: normalized like payload paths
     internal_markers: tuple[str, ...]
     sanctioned: tuple[str, ...]
 
@@ -193,7 +193,7 @@ class Config:
 
     @property
     def llm_mode(self) -> str:
-        """``"llm"`` only when enabled AND a key AND a model are set (SOT 5.4)."""
+        """``"llm"`` only when enabled AND a key AND a model are set."""
         if self.llm_enabled and self.key_present and self.featherless_model:
             return "llm"
         return "template"

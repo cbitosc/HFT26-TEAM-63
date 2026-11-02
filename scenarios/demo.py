@@ -1,8 +1,8 @@
-"""A guided demo of ShadowLens in one terminal.
+"""A guided demo of Shadow Lens in one terminal.
 
     python -m scenarios.demo [--server URL] [--replays] [--only laptop,lab] [--speed 1.0] [--auto]
 
-It drives the RUNNING ShadowLens server through its real API and shows the live event feed inline,
+It drives the RUNNING Shadow Lens server through its real API and shows the live event feed inline,
 so there is nothing to paste and no second terminal to watch. Start the server first:
 
     python -m shadowlens --browser
@@ -12,7 +12,7 @@ By default every step is live:
   laptop    what AI is on THIS machine (running, installed, extensions) and which of it is talking to
             its provider right now. Nothing here is scripted: it is read from the machine.
   sockets   a stand-in local model starts here and a program leaks a key to it over real connections.
-  lab       the audience types anything and sees what ShadowLens finds.
+  lab       the audience types anything and sees what Shadow Lens finds.
 
 ``--replays`` adds three recorded scenarios (leak, organisation, agent) for when nothing live is
 possible, or to show the 52-point headline. They are labelled [REPLAY]: the traffic was written ahead
@@ -57,7 +57,7 @@ from shadowlens.ingest import inventory
 # (key, title, tag, what to say before it starts), in the order they run
 STEPS = (
     ("laptop", "YOUR LAPTOP: WHAT AI IS HERE", "LIVE",
-     "ShadowLens looks at this machine: what is running, installed or left behind, and what is talking to its provider."),
+     "Shadow Lens looks at this machine: what is running, installed or left behind, and what is talking to its provider."),
     ("sockets", "A LEAK OVER REAL CONNECTIONS", "LIVE SOCKETS",
      "A stand-in local model starts on this machine and a program sends it a key over a real connection."),
     ("leak", "A LEAK, AS IT HAPPENS", "REPLAY",
@@ -73,7 +73,7 @@ KEYS = tuple(key for key, *_ in STEPS)
 RESETS = frozenset({"laptop", "sockets", "leak", "org", "agent"})        # the steps that clear the server's data
 FEED_TIMEOUT_S = 30.0
 SETTLE_S = 1.0
-MODEL_PORTS = (11434, 11435)        # the ports the provider catalog knows as Ollama (SOT 12.2)
+MODEL_PORTS = (11434, 11435)        # the ports the provider catalog knows as Ollama
 
 
 class StopDemo(Exception):
@@ -289,7 +289,7 @@ class Demo:
                             "\n".join(json.dumps(r) for r in records).encode("utf-8"))
         risk = self.api("/api/stats/summary")["risk"]
         self.say()
-        self.say(f"  {len(records)} confirmed connection(s) were given to ShadowLens like any other traffic: "
+        self.say(f"  {len(records)} confirmed connection(s) were given to Shadow Lens like any other traffic: "
                  f"{summary['accepted']} recorded, {summary['findings']} finding(s), {summary['alerts']} alert(s).")
         self.say(s.dim("  Each was recorded as a CONNECT: the connection was observed, no request was seen, nothing was read."))
         self.say()
@@ -380,7 +380,7 @@ class Demo:
         secret = fake("aws_secret_key", 1)                            # the key this scenario leaks
         served = "".join(json.dumps(self.api(f"/api/{name}?limit=1000")) for name in ("events", "findings", "alerts"))
         verdict = s.green("not found") if secret not in served else s.red("FOUND, this is a bug")
-        self.say(f"  Check: the real key in everything ShadowLens stores and serves: {verdict}")
+        self.say(f"  Check: the real key in everything Shadow Lens stores and serves: {verdict}")
 
     def step_org(self) -> None:
         self.header("org")
@@ -442,11 +442,11 @@ class Demo:
         try:
             health = self.api("/api/health")
         except (ServerUnavailable, PreviewError):
-            self.say(s.red(f"  No ShadowLens server answered at {self.server}."))
+            self.say(s.red(f"  No Shadow Lens server answered at {self.server}."))
             self.say(f"  Start it in another terminal, then run this again:\n\n      {sys.executable} -m shadowlens --browser\n")
             return 2
         self._plan = chosen
-        self.say(s.bold("ShadowLens demo") + s.dim(f"   server {self.server}   AI advice: {health['llm']['mode']} mode"))
+        self.say(s.bold("Shadow Lens demo") + s.dim(f"   server {self.server}   AI advice: {health['llm']['mode']} mode"))
         self.say(s.dim("  [LIVE] this laptop, now   [LIVE SOCKETS] real connections, stand-in model   "
                        "[REPLAY] recorded traffic, real analysis"))
         actions = {"laptop": self.step_laptop, "sockets": self.step_live_sockets, "leak": self.step_leak,
@@ -489,7 +489,7 @@ def main(argv: list[str] | None = None) -> int:
         if hasattr(stream, "reconfigure"):
             stream.reconfigure(encoding="utf-8", errors="replace")
     config = Config.load()
-    parser = argparse.ArgumentParser(description="A guided demo of ShadowLens.")
+    parser = argparse.ArgumentParser(description="A guided demo of Shadow Lens.")
     parser.add_argument("--server", default=config.server_url)
     parser.add_argument("--replays", action="store_true", help="also run the three recorded scenarios")
     parser.add_argument("--only", type=parse_steps, help=f"comma list of steps to run: {', '.join(KEYS)}")

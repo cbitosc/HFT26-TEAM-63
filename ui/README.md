@@ -1,4 +1,4 @@
-# ShadowLens UI
+# Shadow Lens UI
 
 Plain HTML, CSS and ES modules. No framework, no npm, no build step.
 
@@ -6,7 +6,7 @@ Plain HTML, CSS and ES modules. No framework, no npm, no build step.
 
 - Backend: `python -m shadowlens`, then open http://127.0.0.1:8787 (FastAPI serves this folder at `/`).
 - Without the backend: `python3 -m http.server 8000 --directory ui`, then open http://localhost:8000/?mock=1
-- Components sheet (Phase 1): `/components.html`
+- Components sheet: `/components.html`
 - ES modules do not load from `file://`; always use one of the servers above.
 
 ## Layout

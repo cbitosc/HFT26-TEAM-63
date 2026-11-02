@@ -1,4 +1,4 @@
-"""Decide which AI provider (if any) a network event is talking to (SOT 7.1).
+"""Decide which AI provider (if any) a network event is talking to.
 
 Match order, strongest evidence first:
 
@@ -79,7 +79,7 @@ def _is_local_address(value: str) -> bool:
 
 
 def is_local_destination(event: NetEvent, hostname: str | None) -> bool:
-    """True if the event went to this machine or a private network (SOT 7.1, step 2)."""
+    """True if the event went to this machine or a private network."""
     if hostname == "localhost" or (hostname or "").endswith(".localhost"):
         return True
     if hostname and _is_local_address(hostname):

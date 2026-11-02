@@ -1,4 +1,4 @@
-"""Overlap resolution and redaction (SOT 7.3)."""
+"""Overlap resolution and redaction."""
 
 from __future__ import annotations
 

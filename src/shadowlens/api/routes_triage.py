@@ -1,4 +1,4 @@
-"""Advice for alerts and the AI egress ledger (SOT 6.7): ``POST /api/alerts/{id}/remediate``, ``GET /api/egress``."""
+"""Advice for alerts and the AI egress ledger: ``POST /api/alerts/{id}/remediate``, ``GET /api/egress``."""
 
 from __future__ import annotations
 

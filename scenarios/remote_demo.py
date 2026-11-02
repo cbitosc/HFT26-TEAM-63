@@ -1,10 +1,10 @@
-"""Two laptops for the live catch (W5): a Claude Code session on one, ShadowLens on the other.
+"""Two laptops for the live catch: a Claude Code session on one, Shadow Lens on the other.
 
-ShadowLens reads what a tool writes on the machine it runs on. This demo helper carries a transcript
-from a second laptop to the one running ShadowLens. It is a stand-in for running ShadowLens on that
+Shadow Lens reads what a tool writes on the machine it runs on. This demo helper carries a transcript
+from a second laptop to the one running Shadow Lens. It is a stand-in for running Shadow Lens on that
 machine, and the demo says so. Nothing here is a product feature.
 
-    # laptop with ShadowLens (the server is already running on 127.0.0.1:8787)
+    # laptop with Shadow Lens (the server is already running on 127.0.0.1:8787)
     python -m scenarios.remote_demo relay
 
     # laptop with Claude Code (this file alone is enough; it needs only the standard library)
@@ -12,8 +12,8 @@ machine, and the demo says so. Nothing here is a product feature.
 
 The forwarder is read-only. It starts at the end of each transcript, so only what is typed after it
 starts is sent, and it sends the lines unchanged. The relay is the only part that listens on the
-network, it needs the token, and it hands the lines to ShadowLens on 127.0.0.1 (the API itself stays
-local). The relay keeps the same parts of a line that SOT 7.2.1 describes: what the user typed, tool
+network, it needs the token, and it hands the lines to Shadow Lens on 127.0.0.1 (the API itself stays
+local). The relay keeps the same parts of a line that the session-file reader uses: what the user typed, tool
 results, and the agent's actions. The agent's prose is dropped.
 """
 
@@ -48,7 +48,7 @@ HOST = "api.anthropic.com"
 PROCESS = "claude-code"
 
 
-# -- relay side: a transcript line becomes an HTTP-log line (SOT 6.3, 7.2.1) -----------------------
+# -- relay side: a transcript line becomes an HTTP-log line -----------------------
 
 def _kept_content(role: str, content: Any) -> Any:
     """What of a message is inspected. None when nothing is."""
@@ -108,7 +108,7 @@ def convert_all(lines: Iterable[str]) -> tuple[list[dict[str, Any]], int]:
 
 
 class Relay:
-    """Receives lines from the forwarder and gives them to ShadowLens on this machine."""
+    """Receives lines from the forwarder and gives them to Shadow Lens on this machine."""
 
     def __init__(self, server: str, token: str, post: Callable[[str, str, str, bytes], Any] | None = None,
                  write: Callable[[str], None] = print):
@@ -130,7 +130,7 @@ class Relay:
         return given is not None and hmac.compare_digest(given.encode(), self.token.encode())
 
     def handle(self, payload: Any) -> dict[str, Any]:
-        """Convert a batch and hand it to ShadowLens. Raises on a server failure so the caller can say 502."""
+        """Convert a batch and hand it to Shadow Lens. Raises on a server failure so the caller can say 502."""
         lines = payload.get("lines") if isinstance(payload, dict) else None
         if not isinstance(lines, list):
             raise ValueError("expected {\"lines\": [...]}")
@@ -184,13 +184,13 @@ def _handler(relay: Relay) -> type[BaseHTTPRequestHandler]:
                 result = relay.handle(json.loads(raw.decode("utf-8")))
             except (ValueError, UnicodeDecodeError) as exc:
                 return self._reply(400, {"error": str(exc)})
-            except Exception as exc:  # ShadowLens not reachable or it refused: the forwarder keeps the lines
+            except Exception as exc:  # Shadow Lens not reachable or it refused: the forwarder keeps the lines
                 relay.failures += 1
-                relay.write(f"  ! could not give {length} bytes to ShadowLens ({type(exc).__name__})")
-                return self._reply(502, {"error": "ShadowLens did not accept the lines"})
+                relay.write(f"  ! could not give {length} bytes to Shadow Lens ({type(exc).__name__})")
+                return self._reply(502, {"error": "Shadow Lens did not accept the lines"})
             if result["inspected"]:
                 relay.write(f"  received {result['received']} line(s), {result['inspected']} inspected "
-                            f"-> ShadowLens findings: {result.get('findings')}")
+                            f"-> Shadow Lens findings: {result.get('findings')}")
             self._reply(200, result)
 
     return Handler
@@ -339,9 +339,9 @@ def main(argv: list[str] | None = None) -> int:
         sys.stdout.reconfigure(encoding="utf-8", errors="replace", line_buffering=True)
     parser = argparse.ArgumentParser(description="Carry a Claude Code transcript from one laptop to another (demo).")
     commands = parser.add_subparsers(dest="command", required=True)
-    relay = commands.add_parser("relay", help="on the laptop that runs ShadowLens")
+    relay = commands.add_parser("relay", help="on the laptop that runs Shadow Lens")
     relay.add_argument("--port", type=int, default=DEFAULT_RELAY_PORT)
-    relay.add_argument("--server", default=os.environ.get("SHADOWLENS_URL", DEFAULT_SERVER), help="ShadowLens API")
+    relay.add_argument("--server", default=os.environ.get("SHADOWLENS_URL", DEFAULT_SERVER), help="Shadow Lens API")
     relay.add_argument("--token", default=None, help="default: a new random token")
     forward = commands.add_parser("forward", help="on the laptop that runs Claude Code")
     forward.add_argument("--to", required=True, help="the relay, e.g. http://192.168.1.20:8800")
@@ -357,10 +357,10 @@ def main(argv: list[str] | None = None) -> int:
         except OSError as exc:
             print(f"Cannot listen on port {args.port}: {exc}")
             return 1
-        print("Relay is up. It is the only part of ShadowLens listening on the network.")
+        print("Relay is up. It is the only part of Shadow Lens listening on the network.")
         for address in lan_addresses() or ["<this laptop's address>"]:
             print(f"  on the other laptop:  python remote_demo.py forward --to http://{address}:{args.port} --token {token}")
-        print(f"  giving lines to ShadowLens at {args.server}   (Ctrl+C to stop)")
+        print(f"  giving lines to Shadow Lens at {args.server}   (Ctrl+C to stop)")
         try:
             httpd.serve_forever()
         except KeyboardInterrupt:

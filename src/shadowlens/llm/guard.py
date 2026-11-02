@@ -1,4 +1,4 @@
-"""What an AI model may be sent, and the check before anything is sent (SOT 7.7).
+"""What an AI model may be sent, and the check before anything is sent.
 
 The model sees one redacted finding and nothing else: rule, title, severity, category, process, provider,
 whether the provider is approved, and (if switched on) at most 120 characters of already-redacted context.

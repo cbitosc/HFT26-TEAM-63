@@ -1,4 +1,4 @@
-"""Routes for the automatic sources (SOT 6.7): ``GET /api/sources``, ``PUT /api/sources/{id}``."""
+"""Routes for the automatic sources: ``GET /api/sources``, ``PUT /api/sources/{id}``."""
 
 from __future__ import annotations
 

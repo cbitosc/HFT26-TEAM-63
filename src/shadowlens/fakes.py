@@ -1,11 +1,11 @@
-"""Fake secrets and personal data, generated at runtime (SOT 8.1).
+"""Fake secrets and personal data, generated at runtime.
 
 Committed files only ever hold placeholders such as ``{{fake:openai_key#1}}``;
 ``expand`` turns them into values. Output is deterministic: the same kind and
 index always give the same fake, on every machine.
 
 Prefixes are written in pieces (``"sk_" + "live_"``) so this file itself contains
-nothing token-shaped for push protection or AT-26 to find. Random parts use only
+nothing token-shaped for push protection to find. Random parts use only
 letters and digits because several detector patterns end in a word boundary.
 Domains use ``.invalid`` so a fake never trips a second rule by accident.
 """

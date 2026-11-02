@@ -398,7 +398,7 @@ def test_sample_file_has_only_placeholders_never_token_shaped_strings():
     allowed = {"openai_key", "anthropic_key", "aws_access_key", "aws_secret_key", "github_token", "slack_token",
                "google_key", "hf_token", "stripe_key", "jwt", "private_key_header", "db_url", "card_visa", "card_mc",
                "card_amex", "aadhaar", "ssn", "pan", "iban", "email", "phone_in", "internal_host", "password"}
-    assert kinds <= allowed                                              # SOT 8.1 kinds only
+    assert kinds <= allowed                                              # known kinds only
 
 
 def test_sample_file_covers_the_variety_the_demo_needs():
@@ -417,7 +417,7 @@ def test_sample_file_covers_the_variety_the_demo_needs():
     assert all(e.ts.endswith("Z") for e in events)
 
 
-def test_sample_file_native_keys_are_present_where_the_sot_describes():
+def test_sample_file_native_keys_are_present_where_the_documented_describes():
     events = parse_log(SAMPLE.read_text(encoding="utf-8"), expand=placeholders).events
     by_host = {}
     for e in events:

@@ -1,9 +1,9 @@
-"""Writes a Claude Code style transcript, line by line, with fake secrets (SOT 8.3).
+"""Writes a Claude Code style transcript, line by line, with fake secrets.
 
     python -m scenarios.transcript_sim [--dir data/transcripts_demo] [--interval 2]
 
 It lets anyone test the transcript reader without Claude Code, and it is the fallback for the
-live catch demo (W5). Each run starts a new session file, like a new Claude Code session.
+live catch demo. Each run starts a new session file, like a new Claude Code session.
 """
 
 from __future__ import annotations

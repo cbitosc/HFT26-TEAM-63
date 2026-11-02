@@ -1,9 +1,7 @@
 # Detectors
 
-How ShadowLens finds secrets, personal data and source code in AI traffic. For anyone changing the
+How Shadow Lens finds secrets, personal data and source code in AI traffic. For anyone changing the
 rules, tuning them, or wondering why a finding did or did not appear.
-
-For how this connects to the pipeline, see [ANALYSIS_INTEGRATION.md](ANALYSIS_INTEGRATION.md).
 
 ## The flow
 
@@ -40,7 +38,7 @@ Import these from `shadowlens.analysis`.
 
 ## Rules
 
-Severities and confidences are frozen in SOT 6.5 and held in `analysis/catalog.py`.
+Severities and confidences are frozen and held in `analysis/catalog.py`.
 
 ### Secrets (`analysis/secrets.py`)
 

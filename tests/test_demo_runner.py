@@ -1,4 +1,4 @@
-"""The guided demo, run against a real server on a real port, with nothing stubbed (SOT 12.1).
+"""The guided demo, run against a real server on a real port, with nothing stubbed.
 
 Where the demo reads this machine, the tests give it a pretend machine built from real files and the
 real scanning code; one test reads the real machine.
@@ -185,12 +185,12 @@ def test_post_file_uploads_a_log(server):
 
 # ---- the recorded steps ---------------------------------------------------------------------------------
 
-def test_the_leak_ramps_to_the_score_the_sot_promises_and_the_feed_is_live(make, server):
+def test_the_leak_ramps_to_the_score_the_documented_promises_and_the_feed_is_live(make, server):
     # Slow enough for the score publisher (it updates at most every 250 ms) to show the climb.
     d, out = make(speed=4.0)
     d.step_leak()
     shown = text(out)
-    assert "RISK now  5/100" in shown and "RISK now  52/100 (high)" in shown       # AT-08
+    assert "RISK now  5/100" in shown and "RISK now  52/100 (high)" in shown
     assert shown.index("RISK now  5/100") < shown.index("FOUND") < shown.index("RISK now  52/100")
     assert "AWS secret access key sent to an AI tool" in shown and "TyRb... (len 40)" in shown
     assert "total S = 58.5  ->  tool score 52/100" in shown
@@ -356,7 +356,7 @@ def test_leak_lab_uses_the_keyboard(make, server):
     d.read = lambda prompt: next(keys)
     d.step_leak_lab()
     shown = text(out)
-    assert "LEAK LAB" in shown and "Stripe API key" in shown and "connected to the ShadowLens server" in shown
+    assert "LEAK LAB" in shown and "Stripe API key" in shown and "connected to the Shadow Lens server" in shown
 
 
 def test_no_server_gives_instructions_not_a_crash(config):
@@ -365,7 +365,7 @@ def test_no_server_gives_instructions_not_a_crash(config):
         closed = f"http://127.0.0.1:{probe.getsockname()[1]}"
     out = []
     code = Demo(closed, config, PLAIN, auto=True, write=out.append).run(["laptop"])
-    assert code == 2 and "-m shadowlens --browser" in text(out) and "No ShadowLens server answered" in text(out)
+    assert code == 2 and "-m shadowlens --browser" in text(out) and "No Shadow Lens server answered" in text(out)
 
 
 def test_step_names_are_checked():

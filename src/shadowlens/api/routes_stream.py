@@ -1,4 +1,4 @@
-"""``GET /api/stream``: the live event stream (SOT 6.8)."""
+"""``GET /api/stream``: the live event stream."""
 
 from __future__ import annotations
 

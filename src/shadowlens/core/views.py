@@ -1,4 +1,4 @@
-"""Everything the dashboard reads that is worked out from the stored rows (SOT 6.9, 7.5).
+"""Everything the dashboard reads that is worked out from the stored rows.
 
 Tools, risk scores, the agent matrix, provider rows, the exposure graph and the summary are
 never stored. They are computed here from events, findings and agent activity, so a change
@@ -145,7 +145,7 @@ class Insights:
             confidence = _CONFIDENCE_BY_RANK[row["conf_rank"]]
             unconfirmed = confidence is MatchConfidence.LOW
             sanctioned = effective_sanctioned(self.config, snap.overrides, provider.id)
-            rows = [] if unconfirmed else findings.get(tool_id, [])      # a guess creates no findings (SOT 7.5)
+            rows = [] if unconfirmed else findings.get(tool_id, [])      # a guess creates no findings
 
             result = score_tool(tool_id, rows, exposure=catalog.exposure(provider.category), sanctioned=sanctioned)
             snap.scores[tool_id] = result
@@ -295,7 +295,7 @@ class Insights:
     # ---- why this score? ----------------------------------------------------
 
     def compliance(self) -> "Compliance":
-        """Which controls have an open finding (SOT 7.6). The mapping is ``config/compliance.yaml``."""
+        """Which controls have an open finding. The mapping is ``config/compliance.yaml``."""
         def build():
             rows = [compliance_map.OpenFinding(i, r) for i, r in self.db.open_finding_refs()]
             return compliance_map.build(self._controls(), rows, self.risk())

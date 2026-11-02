@@ -57,9 +57,9 @@ def test_make_tool_id():
     assert make_tool_id("  ", "openai") == "unknown|openai"
 
 
-# ---- vocabulary (exact SOT values) -------------------------------------------
+# ---- vocabulary (exact values) -------------------------------------------
 
-def test_enum_values_are_the_sot_strings():
+def test_enum_values_are_the_documented_strings():
     assert {x.value for x in Source} == {"conn_scan", "http_log", "har", "pcap", "live_log", "transcript", "proxy", "browser", "scenario"}
     assert {x.value for x in HostBasis} == {"sni", "host_header", "url", "resolved_ip", "dns_query", "port_only", "transcript"}
     assert {x.value for x in Visibility} == {"full", "metadata_only"}
@@ -170,7 +170,7 @@ def test_unknown_field_rejected():
         event(secret_field="x")
 
 
-def test_event_json_round_trip_uses_sot_field_names():
+def test_event_json_round_trip_uses_documented_field_names():
     e = event(body_text="hi", body_bytes=2, method="POST", path="/v1/chat", pid=4123, bytes_out=None)
     data = json.loads(e.model_dump_json())
     assert set(data) == {
@@ -262,7 +262,7 @@ def test_hash12_must_be_12_hex_chars():
         finding(meta={"hash12": "XYZ"})
 
 
-def test_location_field_is_one_of_the_sot_values():
+def test_location_field_is_one_of_the_documented_values():
     assert finding(location={"field": "header:authorization", "offset": None}).location.offset is None
     with pytest.raises(ValidationError):
         finding(location={"field": "header:cookie"})

@@ -195,7 +195,7 @@ def test_privileged_never_raises(monkeypatch):
 # ---- the real thing ------------------------------------------------------------------
 
 def test_the_real_scan_sees_a_real_connection_on_this_machine():
-    """Open a real TCP connection and check psutil really reports it (the heart of AT-01)."""
+    """Open a real TCP connection and check psutil really reports it (the core check)."""
     server = socket.socket()
     server.bind(("127.0.0.1", 0))
     server.listen()

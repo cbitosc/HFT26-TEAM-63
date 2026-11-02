@@ -1,4 +1,4 @@
-"""Attacks on the agent rules (SOT 7.4): disguised commands, odd tool names and argument keys, other request
+"""Attacks on the agent rules: disguised commands, odd tool names and argument keys, other request
 formats, bodies padded past the size limit. Plus the other side: ordinary developer commands must stay quiet."""
 
 import json

@@ -1,6 +1,6 @@
-"""The rule catalog (SOT 6.5) and the small types every detector shares.
+"""The rule catalog and the small types every detector shares.
 
-Rule ids, severities and confidences are frozen; change them only through SOT 0.3.
+Rule ids, severities and confidences are frozen; change them deliberately, with a migration note.
 Titles live in ``core/rule_titles.py``, shared with the pipeline.
 """
 
@@ -11,7 +11,7 @@ from dataclasses import dataclass, field
 from shadowlens.core.rule_titles import title_for
 from shadowlens.models import category_for_rule
 
-# Overlap priority, lower wins (SOT 7.3).
+# Overlap priority, lower wins.
 _NAMED_SECRET, _DB_URL, _CHECKSUM_PII, _GENERIC, _OTHER_PII, _ENTROPY = range(6)
 _NOT_ON_SPANS = 9  # code and agent rules never compete for a span
 

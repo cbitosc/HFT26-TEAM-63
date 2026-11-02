@@ -1,4 +1,4 @@
-"""The risk score (SOT 7.5). Pure functions: no database, no clock.
+"""The risk score. Pure functions: no database, no clock.
 
 For every finding of a tool:
 
@@ -120,7 +120,7 @@ def score_tool(
 
     ``exposure`` is the category multiplier from the provider catalog;
     ``sanctioned`` says whether the tool's provider is approved. The caller leaves out
-    findings of tools whose provider match is only a guess (SOT 7.5).
+    findings of tools whose provider match is only a guess.
     """
     ordered = sorted(findings, key=lambda f: (f.created_at, f.id))       # oldest first, ties by id: repeatable
     m_sanction = M_SANCTIONED if sanctioned else M_UNSANCTIONED

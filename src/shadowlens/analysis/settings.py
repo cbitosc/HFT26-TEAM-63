@@ -1,6 +1,6 @@
 """What the analysis needs from the outside, loaded once at startup.
 
-``analyze`` must not touch the disk (SOT 7.3), so the salt and the YAML files are read here and
+``analyze`` must not touch the disk, so the salt and the YAML files are read here and
 the result is passed in.
 
 Nothing here may stop detection. A missing, damaged or out-of-range setting falls back to its

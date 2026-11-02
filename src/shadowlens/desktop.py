@@ -1,4 +1,4 @@
-"""The desktop window (SOT 5.5): a native window around the local dashboard.
+"""The desktop window: a native window around the local dashboard.
 
 pywebview uses WebView2 (Edge) on Windows. If the window cannot be created for
 any reason, ``open_window`` returns False and the caller falls back to the
@@ -11,7 +11,7 @@ import logging
 
 log = logging.getLogger("shadowlens.desktop")
 
-TITLE = "ShadowLens"
+TITLE = "Shadow Lens"
 WIDTH, HEIGHT = 1360, 860
 MIN_SIZE = (1100, 700)
 

@@ -1,4 +1,4 @@
-# Which AI tools ShadowLens looks for on a machine (read by ingest/inventory.py).
+# Which AI tools Shadow Lens looks for on a machine (read by ingest/inventory.py).
 #
 # Matching is by EXACT identifiers: a program's name (and where it runs from), an installed app's
 # name and publisher, an editor extension id, a folder, a command on the PATH. Never loose keywords:

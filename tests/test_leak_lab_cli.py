@@ -1,4 +1,4 @@
-"""The terminal Leak Lab: real analyzer, real server, no stand-ins (SOT 9.3.2)."""
+"""The terminal Leak Lab: real analyzer, real server, no stand-ins."""
 
 import re
 import socket
@@ -81,7 +81,7 @@ def session(analyzer, *lines, style=PLAIN, mode="text"):
 def test_a_typed_key_is_found_masked_and_redacted_by_the_real_server(live):
     key = fake("openai_key", 3)
     code, shown = session(live, f"why does {key} fail?")
-    assert code == 0 and f"connected to the ShadowLens server at {live.server}" in shown
+    assert code == 0 and f"connected to the Shadow Lens server at {live.server}" in shown
     assert "WHAT WAS FOUND (1)" in shown and "OpenAI-style API key" in shown and "sk-p... (len 51)" in shown
     receive = shown.split("WHAT THE AI MODEL WOULD RECEIVE")[1]
     assert "[REDACTED:SEC_OPENAI_KEY:" in receive and key not in receive
@@ -153,7 +153,7 @@ def test_it_falls_back_to_the_analyzer_in_this_process(offline):
 
 def test_the_whole_session_works_without_a_server(offline):
     _, shown = session(offline, f"card {fake('card_visa', 7)}", ":samples")
-    assert "no ShadowLens server found" in shown
+    assert "no Shadow Lens server found" in shown
     assert "Payment card number" in shown and "no server is running" in shown and shown.count("● example:") == 3
 
 
@@ -176,7 +176,7 @@ def test_server_command_finds_a_server_that_started_later(server, config):
     out = []
     run(analyzer, PLAIN, read=typed(":server"), write=out.append)
     assert analyzer.server_up is True
-    assert any("connected to the ShadowLens server" in line for line in out[2:])   # after the start-up lines
+    assert any("connected to the Shadow Lens server" in line for line in out[2:])   # after the start-up lines
 
 
 # ---- showing the answer -----------------------------------------------------------------------------------
@@ -308,7 +308,7 @@ def test_main_runs_with_arguments(monkeypatch, server, capsys, tmp_path):
     monkeypatch.setattr("builtins.input", typed(f"key {fake('hf_token', 11)}"))
     assert leak_lab.main(["--server", server, "--color", "never"]) == 0
     out = capsys.readouterr().out
-    assert "Hugging Face token" in out and "connected to the ShadowLens server" in out and not ANSI.search(out)
+    assert "Hugging Face token" in out and "connected to the Shadow Lens server" in out and not ANSI.search(out)
 
 
 def test_main_can_start_in_agent_mode(monkeypatch, capsys, tmp_path):

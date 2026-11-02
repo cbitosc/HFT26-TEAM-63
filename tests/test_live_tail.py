@@ -157,7 +157,7 @@ def test_a_restart_neither_repeats_nor_loses_lines(live, db):
     first, sink1 = make(live, db)
     append(live / "x.jsonl", line("/before") + "\n")
     first.poll_once()
-    append(live / "x.jsonl", line("/while-down") + "\n")            # written while ShadowLens was not running
+    append(live / "x.jsonl", line("/while-down") + "\n")            # written while Shadow Lens was not running
     second, sink2 = make(live, db)                                  # a new instance, same database
     assert second.poll_once() == 1 and sink2.paths() == ["/while-down"]
 

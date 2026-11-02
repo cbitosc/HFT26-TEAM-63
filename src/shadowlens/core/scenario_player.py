@@ -1,4 +1,4 @@
-"""Load or play a demo scenario (SOT 6.7, ``/api/demo/*``).
+"""Load or play a demo scenario.
 
 ``load`` puts all of a scenario's events in at once. ``play`` feeds them in over time,
 telling the dashboard how far along it is (``scenario.progress``), so the 10-second leak
