@@ -1,16 +1,14 @@
-# ShadowLens
+# Shadow Lens
 
 ### Find the shadow AI. Prove what leaked. Govern the agents.
 
-**AI Shadow IT & Agentic Data Exfiltration Scanner** · CBIT Hacktoberfest '26 · Team PowerPuff Girls (TEAM-63) · Domain: AI Security & Data Privacy · Difficulty: Advanced
+Shadow Lens is a local, passive desktop app. It finds which AI tools are running on a machine (cloud AI, local models such as Ollama, browser AI tools and autonomous coding agents), reads the text it can legitimately see to prove what sensitive data was sent to them, shows what each agent was allowed to do compared with what it actually did, and scores the risk on a dashboard that never leaves the machine. It reports; it never blocks. It needs no SSL decryption and nothing installed on other machines, and it says plainly what it cannot see.
 
-ShadowLens is a local, passive desktop app. It finds which AI tools are running on a machine (cloud AI, local models such as Ollama, browser AI tools and autonomous coding agents), reads the text it can legitimately see to prove what sensitive data was sent to them, shows what each agent was allowed to do compared with what it actually did, and scores the risk on a dashboard that never leaves the machine. It reports; it never blocks. It needs no SSL decryption and nothing installed on other machines, and it says plainly what it cannot see.
-
-![ShadowLens overview](docs/screenshots/overview.png)
+![Shadow Lens overview](docs/screenshots/overview.png)
 
 ## Contents
 
-[The problem](#the-problem) · [Solution overview](#solution-overview) · [Approach](#approach) · [Architecture](#architecture) · [Key screenshots](#key-screenshots) · [What it detects](#what-it-detects) · [Scoring and compliance](#scoring-and-compliance) · [Tech stack](#tech-stack) · [Local setup and installation](#local-setup-and-installation) · [Trying it out](#trying-it-out) · [Configuration](#configuration) · [Testing and evidence](#testing-and-evidence) · [Privacy and limits](#privacy-and-limits) · [Repository layout](#repository-layout) · [Team](#team) · [Attribution](#attribution)
+[The problem](#the-problem) · [Solution overview](#solution-overview) · [Approach](#approach) · [Architecture](#architecture) · [Key screenshots](#key-screenshots) · [What it detects](#what-it-detects) · [Scoring and compliance](#scoring-and-compliance) · [Tech stack](#tech-stack) · [Local setup and installation](#local-setup-and-installation) · [Trying it out](#trying-it-out) · [Configuration](#configuration) · [Testing and evidence](#testing-and-evidence) · [Privacy and limits](#privacy-and-limits) · [Repository layout](#repository-layout) · [Attribution](#attribution)
 
 ## The problem
 
@@ -24,17 +22,6 @@ Employees and developers now use cloud AI, local models, browser AI tools and co
 | **Prove** | Detects secrets, personal data and confidential code in what was sent, and stores only a mask and a fingerprint, so the proof never becomes a new leak |
 | **Govern** | Shows each agent's granted capabilities (shell, files, network, MCP) against what it actually used, and flags risky commands and credential-file reads |
 | **Score** | One explainable organisation risk score and a compliance view, with every point traceable to a finding |
-
-How this answers the problem statement:
-
-| Requirement | Where it lands |
-| :-- | :-- |
-| R1. Passively inspect local process connections, or accept PCAP / HTTP log uploads | Live process scan (`psutil`), `.jsonl` and `.har` upload, live log folder, AI session-file reader, opt-in Ollama tap, browser history, generated scenarios. PCAP upload is not built yet |
-| R2. Identify requests to AI providers and local LLM servers | A catalog of 27 providers matched by host, local port (11434, 1234 and others) and path hints |
-| R3. Analyze outgoing payloads in real time with entropy and regex | 35 rules for secrets, personal data, code and agent behavior; streamed live over server-sent events |
-| R4. Flag risky agent behavior | Shell, dangerous-command, data-sent-out, sensitive-file and outside-workspace rules; an agent permission map |
-| R5. Local, privacy-focused dashboard | Web dashboard on `127.0.0.1`, shown in a desktop window: usage stats, leak alerts, a risk score and compliance mapping |
-| Suggested: an LLM inspects flagged snippets and writes remediation | Triage through Featherless open-source models, always on redacted text, with a template fallback |
 
 ## Approach
 
@@ -146,8 +133,8 @@ Findings map to 12 controls in [config/compliance.yaml](config/compliance.yaml) 
 **Windows (PowerShell)**
 
 ```powershell
-git clone https://github.com/rayyanafroz/HFT26-TEAM-63.git
-cd HFT26-TEAM-63
+git clone <repository-url> shadow-lens
+cd shadow-lens
 py -3.11 -m venv .venv
 .venv\Scripts\python -m pip install -r requirements.txt
 copy .env.example .env
@@ -157,7 +144,7 @@ copy .env.example .env
 **macOS / Linux**
 
 ```bash
-git clone https://github.com/rayyanafroz/HFT26-TEAM-63.git && cd HFT26-TEAM-63
+git clone <repository-url> shadow-lens && cd shadow-lens
 python3 -m venv .venv && .venv/bin/python -m pip install -r requirements.txt
 cp .env.example .env
 .venv/bin/python -m shadowlens
@@ -194,7 +181,7 @@ The suite has more than 3,000 tests, including adversarial suites that attack th
 
 **Guarantees:** runs only on this machine; foreign `Host` and `Origin` requests get 403; no raw secret is stored (only a mask and a fingerprint); an AI model only receives placeholders and every call is logged in a visible ledger.
 
-**What it cannot see:** inside HTTPS unless exported as a HAR file; what is typed in a browser chat (only that the site is open); AI tools that keep no readable session file (only Claude Code's is supported so far); connections shorter than about 2 seconds; a secret hidden only in the middle of a request over 256 KB. Detection happens after the prompt is sent, so ShadowLens cannot prevent a leak; blocking at submit time is the natural next step on the same detectors. PCAP upload is not built yet, and it has not had a full test round on Windows.
+**What it cannot see:** inside HTTPS unless exported as a HAR file; what is typed in a browser chat (only that the site is open); AI tools that keep no readable session file (only Claude Code's is supported so far); connections shorter than about 2 seconds; a secret hidden only in the middle of a request over 256 KB. Detection happens after the prompt is sent, so Shadow Lens cannot prevent a leak; blocking at submit time is the natural next step on the same detectors. PCAP upload is not built yet, and it has not had a full test round on Windows.
 
 ## Repository layout
 
@@ -212,17 +199,8 @@ scenarios/     templates/*.jsonl, demo, mock_ollama, agent_sim, transcript_sim
 fixtures/      labeled test data and samples
 ui/            the dashboard (plain HTML, CSS, JavaScript)
 tests/         pytest suite
-docs/          DETECTORS, DEMO, INVENTORY, ANALYSIS_INTEGRATION, screenshots/
+docs/          DETECTORS, DEMO, INVENTORY, screenshots/
 ```
-
-## Team
-
-| Member | Role |
-| :-- | :-- |
-| Rayyan Ahmed | Backend lead: ingest, scoring, API, desktop app, AI triage |
-| Saleha Baseer | Detectors, agent rules, simulators and demo tooling |
-| Afzal Hashmi Syed and Soha Alam Khan | Frontend |
-| Misbah Hussain | Test data, QA and presentation |
 
 ## Attribution
 
@@ -233,43 +211,6 @@ docs/          DETECTORS, DEMO, INVENTORY, ANALYSIS_INTEGRATION, screenshots/
 | python-multipart | Apache-2.0 |
 | pytest | MIT |
 | Hanken Grotesk, IBM Plex Mono (self-hosted fonts) | SIL Open Font License 1.1 |
-| three.js, Vanta.js (dashboard background) | MIT |
 | GSAP and ScrollTrigger (dashboard motion) | GSAP Standard "No Charge" license |
 
 The project itself is under the MIT license (see [LICENSE](LICENSE)). All demo secrets are generated at run time from `src/shadowlens/fakes.py`; the repository holds no real or token-shaped secret.
-
----
-
-# Hackathon information (from the official starter)
-
-## Team
-
-| Attribute | Details |
-| :--- | :--- |
-| **Team Name** | **PowerPuff Girls** |
-| **Team Number** | `TEAM-63` (`HFT26-TEAM-63`) |
-| **Registration ID** | `HFEST26-TKZFEDTW` |
-| **Problem Track** | **#4 AI Shadow IT & Agentic Data Exfiltration Scanner** |
-| **Domain** | `AI Security & Data Privacy` |
-| **Team Leader** | Afzal Hashmi Syed (afzalsyed.hs@gmail.com) |
-| **Institution** | Muffakham Jah College of Engineering and Technology |
-
-| # | Name | Email | Institution |
-| :--- | :--- | :--- | :--- |
-| 1 | Soha Alam Khan | sohaalam0123@gmaiil.com | Muffakham Jah College of Engineering and Technology |
-| 2 | Misbah Hussain | misbahhussain1007@gmail.com | Muffakham Jah College of Engineering and Technology |
-| 3 | Saleha Baseer | salehabaseer@gmail.com | Muffakham Jah College of Engineering and Technology |
-| 4 | Rayyan Ahmed | rayyanafroz.ahmed1233@gmail.com | Muffakham Jah College of Engineering and Technology |
-
-## Contribution and submission workflow
-
-Work on feature branches in this fork; never commit directly to `main`. The final submission is a pull request from this fork's `main` to the upstream repository's `main`.
-
-- **PR title:** `[SUBMISSION] TEAM-63 - PowerPuff Girls - AI Shadow IT & Agentic Data Exfiltration Scanner`
-- **PR description:** solution overview and approach · architecture and tech stack · local setup and installation · demo video / live URL · key screenshots
-
-## Rules and code of conduct
-
-* **Upstream protection:** do not push directly to the upstream repository's main branch. Evaluation is on the submitted pull request.
-* **Original work:** all code must be developed during the hackathon. Open-source libraries are welcome with proper attribution.
-* **Code freeze:** the final pull request must be submitted before the official deadline.

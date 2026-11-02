@@ -1,4 +1,4 @@
-// Global bar and status strip (Frontend Design PDF p4). Both are on every screen.
+// Global bar and status strip. Both are on every screen.
 import { el, fmtNumber, pct } from "../ui.js";
 import { logo, button } from "./primitives.js";
 
@@ -37,7 +37,7 @@ export function globalBar({ routes, scenarios, onLoad, onPlay, onReset }) {
   const bReset = button({ label: "Reset", variant: "small", onClick: () => onReset() });
 
   const node = el("header", { class: "gbar", role: "banner" },
-    el("a", { href: "#/home", "aria-label": "ShadowLens, go to Home", style: "text-decoration:none;flex:none" }, logo({ night: true, size: 28 })),
+    el("a", { href: "#/home", "aria-label": "Shadow Lens, go to Home", style: "text-decoration:none;flex:none" }, logo({ night: true, size: 28 })),
     el("nav", { class: "gbar__nav", "aria-label": "Main" }, ...links),
     el("div", { class: "scenario" },
       el("span", { class: "scenario__label" }, "Scenario"),
@@ -81,7 +81,7 @@ export function statusStrip() {
     node,
     /** health: /api/health. summary: /api/stats/summary. Either may be null before the first load. */
     update({ health, summary, conn, illustrative, protectionOn = true }) {
-      const hosts = health?.llm?.enabled && health?.llm?.key_present ? 1 : 0;   // count of outbound hosts is not in the API (UD-09)
+      const hosts = health?.llm?.enabled && health?.llm?.key_present ? 1 : 0;   // count of outbound hosts is not in the API
       hostsBtn.replaceChildren(el("b", {}, "Local only"), ` · ${health ? hosts : dash()} outbound host${hosts === 1 ? "" : "s"} `, el("span", { "aria-hidden": "true" }, "▾"));
       hostsNote.replaceChildren(
         el("strong", {}, "Only redacted text leaves this computer."),

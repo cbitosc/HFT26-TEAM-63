@@ -107,7 +107,7 @@ def test_unexpected_errors_are_json_500_without_details(tmp_path, db):
 def test_placeholder_page_when_there_is_no_index_html(client):
     r = client.get("/")
     assert r.status_code == 200 and r.headers["content-type"].startswith("text/html")
-    assert "ShadowLens" in r.text
+    assert "Shadow Lens" in r.text
 
 
 def test_placeholder_makes_no_external_requests():

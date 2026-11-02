@@ -1,8 +1,8 @@
-"""The FastAPI application (SOT 5.1, 6.1, 6.7).
+"""The FastAPI application.
 
 ``create_app`` builds the app: the JSON API under ``/api`` and, if the ``ui/``
 folder has an ``index.html``, the dashboard files at ``/``. Errors are always
-JSON of the form ``{"error": "message"}`` (SOT 6.1); internal details are never
+JSON of the form ``{"error": "message"}``; internal details are never
 sent to the client.
 """
 
@@ -48,10 +48,10 @@ DEFAULT_UI_DIR = Path(__file__).resolve().parents[3] / "ui"
 # Shown at "/" until the real dashboard (ui/index.html) exists. No external requests.
 PLACEHOLDER_HTML = """<!doctype html>
 <html lang="en">
-<head><meta charset="utf-8"><title>ShadowLens</title>
+<head><meta charset="utf-8"><title>Shadow Lens</title>
 <meta name="viewport" content="width=device-width, initial-scale=1"></head>
 <body>
-<h1>ShadowLens</h1>
+<h1>Shadow Lens</h1>
 <p>The server is running. The dashboard (<code>ui/index.html</code>) has not been added yet.</p>
 <p>API health: <a href="/api/health">/api/health</a></p>
 </body>
@@ -153,7 +153,7 @@ def create_app(
                 app.state.db.close()
                 app.state.db = None
 
-    app = FastAPI(title="ShadowLens", version="0.1.0", lifespan=lifespan,
+    app = FastAPI(title="Shadow Lens", version="0.1.0", lifespan=lifespan,
                   docs_url=None, redoc_url=None, openapi_url=None)
     app.state.config = config
     app.state.db = db

@@ -1,4 +1,4 @@
-"""Two laptops for the live catch: forwarder -> relay -> a real ShadowLens server, all on real ports."""
+"""Two laptops for the live catch: forwarder -> relay -> a real Shadow Lens server, all on real ports."""
 
 import json
 import socket
@@ -74,7 +74,7 @@ def line(role, content, **extra):
                        "message": {"role": role, "content": content, **extra}})
 
 
-# -- conversion (SOT 7.2.1) ---
+# -- conversion ---
 
 def test_what_the_user_types_is_kept():
     record = convert(line("user", "hello there"))
@@ -149,7 +149,7 @@ def test_a_typed_key_becomes_one_masked_finding_and_the_key_is_stored_nowhere(re
     assert [f["rule_id"] for f in leaks(server)] == ["SEC_OPENAI_KEY"]
     everything = "".join(json.dumps(api(server, f"/api/{n}?limit=1000")) for n in ("events", "findings", "alerts", "tools"))
     assert key not in everything and key[:12] not in everything
-    assert any("ShadowLens findings" in note for note in relay.notes)
+    assert any("Shadow Lens findings" in note for note in relay.notes)
 
 
 def test_the_same_key_sent_twice_is_one_finding(relay, server):
@@ -272,7 +272,7 @@ def test_it_never_writes_to_the_transcripts(relay, tmp_path):
 
 
 def test_the_transcript_simulator_end_to_end(relay, server, tmp_path):
-    """The fallback for a live demo: the simulator's session reaches ShadowLens through both halves."""
+    """The fallback for a live demo: the simulator's session reaches Shadow Lens through both halves."""
     transcript = tmp_path / "sim.jsonl"
     transcript.write_bytes(b"")
     forwarder = make_forwarder(relay, tmp_path)

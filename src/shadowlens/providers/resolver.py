@@ -1,4 +1,4 @@
-"""Turn provider host names into IP addresses, so a bare connection can be recognised (SOT 7.1).
+"""Turn provider host names into IP addresses, so a bare connection can be recognised.
 
 The live process scan only sees an IP address, never a host name. To still say
 "this connection goes to OpenAI", we look up the catalog's host names ourselves
@@ -13,7 +13,7 @@ address, which then goes to the family's first provider; and providers with ``ip
 (their host names sit on generic shared servers) never get an address at all.
 
 The resolver makes DNS lookups for the catalog's ~28 public host names and
-nothing else (SOT 4.4). Turn it off with ``SHADOWLENS_RESOLVE=false``.
+nothing else. Turn it off with ``SHADOWLENS_RESOLVE=false``.
 """
 
 from __future__ import annotations
@@ -30,8 +30,8 @@ from .catalog import Catalog
 
 log = logging.getLogger("shadowlens.resolver")
 
-REFRESH_INTERVAL_S = 300.0   # SOT 7.1: at start and every 300 s
-LOOKUP_TIMEOUT_S = 2.0       # SOT 7.1: per host
+REFRESH_INTERVAL_S = 300.0   # at start and every 300 s
+LOOKUP_TIMEOUT_S = 2.0       # per host
 
 Lookup = Callable[[str], Sequence[str]]
 

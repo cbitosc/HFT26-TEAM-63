@@ -1,4 +1,4 @@
-// Compliance (Frontend Design PDF p19 controls, p20 why this score, p21 evidence). ?tab=controls|why|evidence
+// Compliance. ?tab=controls|why|evidence
 import { el, fmtNumber, fmtTime, bandLabel, bandTone, scoreTone } from "../ui.js";
 import { watch, load, namer } from "./util.js";
 import { ruleName } from "../rules.js";

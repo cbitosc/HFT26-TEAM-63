@@ -28,11 +28,11 @@ STARTUP_TIMEOUT_S = 20.0
 
 
 def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
-    parser = argparse.ArgumentParser(prog="python -m shadowlens", description="ShadowLens local AI-usage auditor")
+    parser = argparse.ArgumentParser(prog="python -m shadowlens", description="Shadow Lens local AI-usage auditor")
     parser.add_argument("--browser", action="store_true",
                         help="do not open a desktop window; print the URL and keep serving")
     parser.add_argument("--port", type=int, help="override SHADOWLENS_PORT")
-    parser.add_argument("--version", action="version", version=f"ShadowLens {__version__}")
+    parser.add_argument("--version", action="version", version=f"Shadow Lens {__version__}")
     return parser.parse_args(argv)
 
 
@@ -92,7 +92,7 @@ def main(
     open_browser: Callable[[str], object] | None = None,
     stop_event: threading.Event | None = None,
 ) -> int:
-    """Run ShadowLens. The keyword arguments exist so tests can replace the window,
+    """Run Shadow Lens. The keyword arguments exist so tests can replace the window,
     the browser and the "keep running" wait."""
     args = parse_args(argv)
     _utf8_console()
@@ -110,9 +110,9 @@ def main(
     server, thread = start_server(app, config)
     try:
         if not wait_until_healthy(url, thread):
-            print("ShadowLens did not start. Check the messages above.", file=sys.stderr)
+            print("Shadow Lens did not start. Check the messages above.", file=sys.stderr)
             return 1
-        print(f"ShadowLens {__version__} is running at {url}")
+        print(f"Shadow Lens {__version__} is running at {url}")
 
         if config.desktop and not args.browser:
             if (open_window or desktop.open_window)(url):

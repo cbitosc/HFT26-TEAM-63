@@ -4,22 +4,19 @@ import { leaveScreen, enterScreen } from "./motion.js";
 // Home is the default route. An unknown route goes to Home.
 
 export const ROUTES = [
-  { id: "home",      label: "Home",      phase: 3, ready: true },
-  { id: "overview",  label: "Overview",  phase: 3, ready: true },
-  { id: "alerts",    label: "Alerts",    phase: 4, ready: true },
-  { id: "lab",       label: "Leak Lab",  phase: 5, ready: true },
-  { id: "agents",    label: "Agents",    phase: 6, ready: true },
-  { id: "providers", label: "Providers", phase: 6, ready: true },
-  { id: "capture",   label: "Capture",   phase: 7, ready: true },
-  { id: "compliance", label: "Compliance", phase: 8, ready: true },
+  { id: "home",      label: "Home", ready: true },
+  { id: "overview",  label: "Overview", ready: true },
+  { id: "alerts",    label: "Alerts", ready: true },
+  { id: "lab",       label: "Leak Lab", ready: true },
+  { id: "agents",    label: "Agents", ready: true },
+  { id: "providers", label: "Providers", ready: true },
+  { id: "capture",   label: "Capture", ready: true },
+  { id: "compliance", label: "Compliance", ready: true },
 ];
 
 // Routes that open from inside a screen and have no nav link. navAs keeps that nav link highlighted.
-export const HIDDEN_ROUTES = [
-  { id: "pitch", label: "Pitch", phase: "pitch", ready: true, navAs: "home" },
-];
+export const HIDDEN_ROUTES = [];
 
-// Phase 3 onward replaces these loaders with the real screen modules.
 const LOADERS = {
   home: () => import("./screens/home.js"),
   overview: () => import("./screens/overview.js"),
@@ -29,9 +26,8 @@ const LOADERS = {
   providers: () => import("./screens/providers.js"),
   capture: () => import("./screens/capture.js"),
   compliance: () => import("./screens/compliance.js"),
-  pitch: () => import("./screens/pitch.js"),
 };
-const loadScreen = (id) => (LOADERS[id] ?? (() => import("./screens/stub.js")))();
+const loadScreen = (id) => (LOADERS[id] ?? LOADERS.home)();
 
 export function parseHash(hash = window.location.hash) {
   const raw = hash.replace(/^#\/?/, "");
@@ -66,7 +62,7 @@ export function createRouter({ container, ctx, onRoute }) {
     if (mine !== token) return;
     container.replaceChildren();
     onRoute?.(route, params);
-    document.title = `${route.label} · ShadowLens`;
+    document.title = `${route.label} · Shadow Lens`;
     try {
       const mod = await loadScreen(route.id);
       if (mine !== token) return;                              // another navigation won

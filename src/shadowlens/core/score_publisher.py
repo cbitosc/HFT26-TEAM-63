@@ -1,4 +1,4 @@
-"""Tell the dashboard when the score changes, at most 4 times a second (SOT 4.2, 6.8).
+"""Tell the dashboard when the score changes, at most 4 times a second.
 
 Live sources call ``notify`` after every batch of events. If the last message was sent
 less than 250 ms ago, one message is scheduled for when that time is up, so a burst of

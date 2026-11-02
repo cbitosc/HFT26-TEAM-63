@@ -1,4 +1,4 @@
-// Display names for the frozen rule catalog (SOT 6.5) and OWASP LLM Top 10 (2025) ids.
+// Display names for the frozen rule catalog and OWASP LLM Top 10 (2025) ids.
 export const RULES = {
   SEC_PRIVATE_KEY: "Private key", SEC_AWS_SECRET_KEY: "AWS secret key", SEC_GITHUB_TOKEN: "GitHub token",
   SEC_STRIPE_KEY: "Stripe key", SEC_DB_URL: "Database URL with password", SEC_AWS_ACCESS_KEY: "AWS access key id",
@@ -26,7 +26,7 @@ export const OWASP = {
 };
 export const owaspName = (id) => (OWASP[id] ? `${id} ${OWASP[id]}` : id);
 
-/** Where a finding came from. Events and alerts carry source (SOT 6.2); null for an alert whose event is gone. */
+/** Where a finding came from. Events and alerts carry source; null for an alert whose event is gone. */
 const SOURCES = { live_log: "live log", http_log: "upload", har: "upload", pcap: "upload", conn_scan: "scan", scenario: "scenario",
   transcript: "live transcript", proxy: "Ollama tap", ollama_tap: "Ollama tap", browser: "browser" };
 export const sourceName = (s) => (s ? SOURCES[s] ?? s : "–");

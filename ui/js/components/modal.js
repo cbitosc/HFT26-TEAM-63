@@ -1,4 +1,4 @@
-// Confirmation dialog (Frontend Design PDF p6). Focus stays inside; Esc or the scrim cancels.
+// Confirmation dialog. Focus stays inside; Esc or the scrim cancels.
 import { el } from "../ui.js";
 import { button } from "./primitives.js";
 import { overlayIn, overlayOut } from "../motion.js";

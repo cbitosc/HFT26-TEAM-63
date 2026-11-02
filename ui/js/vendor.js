@@ -1,5 +1,5 @@
-// Local copies of third-party motion libraries (ui/vendor/). Nothing loads from a CDN (AT-20: zero external requests).
-// GSAP + ScrollTrigger load for every screen; three.js + Vanta FOG load only when the pitch hero asks for them.
+// Local copies of third-party motion libraries (ui/vendor/). Nothing loads from a CDN (zero external requests).
+// GSAP + ScrollTrigger load for every screen.
 const cache = new Map();
 
 function loadScript(src) {
@@ -22,11 +22,4 @@ export async function loadGsap() {
   await loadScript("vendor/ScrollTrigger.min.js");
   window.gsap.registerPlugin(window.ScrollTrigger);
   return window.gsap;
-}
-
-/** Resolves to window.VANTA (FOG effect) on top of three.js r134. */
-export async function loadVanta() {
-  await loadScript("vendor/three.min.js");
-  await loadScript("vendor/vanta.fog.min.js");
-  return window.VANTA;
 }

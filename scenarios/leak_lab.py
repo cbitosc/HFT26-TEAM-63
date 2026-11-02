@@ -1,4 +1,4 @@
-"""Leak Lab for the terminal: type anything, see what ShadowLens finds (SOT 2.7 W1, 9.3.2).
+"""Leak Lab for the terminal: type anything, see what Shadow Lens finds.
 
     python -m scenarios.leak_lab [--server http://127.0.0.1:8787] [--agent] [--color auto|always|never]
 
@@ -10,7 +10,7 @@ Nothing here is scripted. Each line you type goes to the real analyzer, and you 
   * whether the egress guard would block it, and the risk it would add,
   * how long the analysis took.
 
-It asks the running ShadowLens server. If none is running it uses the same analyzer in this
+It asks the running Shadow Lens server. If none is running it uses the same analyzer in this
 process and says so. Nothing typed is stored, logged or sent anywhere: there is no history file.
 """
 
@@ -32,14 +32,14 @@ REQUEST_TIMEOUT_S = 8.0
 PROBE_TIMEOUT_S = 3.0
 RULE_WIDTH = 78
 
-# Never through a system or environment proxy: this talks to the same machine (SOT 2.5, principle 4).
+# Never through a system or environment proxy: this talks to the same machine.
 _OPENER = urllib.request.build_opener(urllib.request.ProxyHandler({}))
 
-# Severity: a shape and a word, plus color (SOT 9.2). ASCII shapes if the console cannot draw them.
+# Severity: a shape and a word, plus color. ASCII shapes if the console cannot draw them.
 _GLYPHS = {"critical": "◆", "high": "▲", "medium": "■", "low": "●", "info": "–"}
 _GLYPHS_ASCII = {"critical": "*", "high": "^", "medium": "#", "low": "o", "info": "-"}
 _RANK = {"info": 0, "low": 1, "medium": 2, "high": 3, "critical": 4}
-# 256-color backgrounds: red, orange, yellow, blue, grey (the palette of SOT 9.2).
+# 256-color backgrounds: red, orange, yellow, blue, grey.
 _PAINT = {"critical": "1;97;48;5;196", "high": "30;48;5;208", "medium": "30;48;5;220",
           "low": "97;48;5;33", "info": "97;48;5;60"}
 _RESET = "\x1b[0m"
@@ -50,7 +50,7 @@ Type or paste a line and press Enter. Try a fake key, a card number, an email, a
   :agent     analyse an agent request (JSON with tool calls) instead of plain text
   :text      back to plain text
   :samples   run the three ready-made examples
-  :server    look for the ShadowLens server again
+  :server    look for the Shadow Lens server again
   :help      this message          :quit  (or q, or Ctrl+C) to leave
 """
 
@@ -264,8 +264,8 @@ def read_paste(read: Callable[[str], str]) -> str:
 
 def _announce(analyzer: Analyzer, style: Style) -> str:
     if analyzer.server_up:
-        return style.dim(f"  connected to the ShadowLens server at {analyzer.server}")
-    return style.dim("  no ShadowLens server found: using the same analyzer inside this program")
+        return style.dim(f"  connected to the Shadow Lens server at {analyzer.server}")
+    return style.dim("  no Shadow Lens server found: using the same analyzer inside this program")
 
 
 def run(analyzer: Analyzer, style: Style, mode: str = "text",
@@ -273,7 +273,7 @@ def run(analyzer: Analyzer, style: Style, mode: str = "text",
     read = read or input                               # looked up now, not when this file was loaded
     if analyzer.server_up is None:                     # look once; ":server" looks again
         analyzer.check()
-    write(style.bold("ShadowLens Leak Lab") + style.dim("   type :help for commands, :quit to leave"))
+    write(style.bold("Shadow Lens Leak Lab") + style.dim("   type :help for commands, :quit to leave"))
     write(_announce(analyzer, style))
     while True:
         try:
@@ -331,9 +331,9 @@ def main(argv: list[str] | None = None) -> int:
     for stream in (sys.stdout, sys.stdin):
         if hasattr(stream, "reconfigure"):
             stream.reconfigure(encoding="utf-8", errors="replace")
-    parser = argparse.ArgumentParser(description="Type anything and see what ShadowLens finds.")
+    parser = argparse.ArgumentParser(description="Type anything and see what Shadow Lens finds.")
     config = Config.load()
-    parser.add_argument("--server", default=config.server_url, help="the running ShadowLens server")
+    parser.add_argument("--server", default=config.server_url, help="the running Shadow Lens server")
     parser.add_argument("--agent", action="store_true", help="start in agent-request mode")
     parser.add_argument("--color", choices=("auto", "always", "never"), default="auto")
     args = parser.parse_args(argv)

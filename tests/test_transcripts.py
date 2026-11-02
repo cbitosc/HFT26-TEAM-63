@@ -1,4 +1,4 @@
-"""The transcript reader (SOT 7.2.1): AT-28 (the reader), AT-29 (the tail), AT-30 (the sources routes)."""
+"""The transcript reader, its tail and the sources routes."""
 
 import json
 import os
@@ -129,7 +129,7 @@ def test_unicode_and_odd_separators_survive():
     assert KEY in read(msg("user", [{"type": "text", "text": text}])).body_text
 
 
-# ---- AT-28: what the real analysis makes of it ---------------------------------------------------------
+# ---- what the real analysis makes of it ---------------------------------------------------------
 
 @pytest.fixture
 def db(tmp_path):
@@ -212,7 +212,7 @@ def test_globs_expand_home_relative_and_absolute_patterns(tmp_path):
     assert names(expand_glob(str(home / ".tool" / "a" / "one.jsonl"), project, home)) == ["one.jsonl"]
 
 
-# ---- the manager and the tail (AT-29) ---------------------------------------------------------------------
+# ---- the manager and the tail ---------------------------------------------------------------------
 
 def wait_for(condition, timeout=5.0):
     deadline = time.monotonic() + timeout
@@ -479,7 +479,7 @@ def test_a_failure_in_ingest_loses_nothing(rig):
     assert wait_for(lambda: len(r.findings()) == 1) and calls["n"] >= 2
 
 
-# ---- AT-30: the routes ---------------------------------------------------------------------------------
+# ---- the routes ---------------------------------------------------------------------------------
 
 @pytest.fixture
 def client(tmp_path):

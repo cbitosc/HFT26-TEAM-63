@@ -1,4 +1,4 @@
-"""Personal data detectors (SOT 7.3). Checksums reject random numbers."""
+"""Personal data detectors. Checksums reject random numbers."""
 
 from __future__ import annotations
 
@@ -60,7 +60,7 @@ _PRIVATE_IP_RE = re.compile(
     r"(?<![\d.])(?:10(?:\.\d{1,3}){3}|192\.168(?:\.\d{1,3}){2}|172\.(?:1[6-9]|2\d|3[01])(?:\.\d{1,3}){2})(?![\d.])"
 )
 
-# The rules that give one finding per event, with a count (SOT 7.3).
+# The rules that give one finding per event, with a count.
 GROUPED_RULES = frozenset({"PII_EMAIL", "PII_PHONE"})
 
 

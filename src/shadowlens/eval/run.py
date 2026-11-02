@@ -1,4 +1,4 @@
-"""Measures detection on labeled fixtures and writes ``data/evidence.json`` (SOT 8.5).
+"""Measures detection on labeled fixtures and writes ``data/evidence.json``.
 
 Run from the project folder: ``python -m shadowlens.eval.run``. The Evidence screen only
 shows what this measured; no metric value is written by hand anywhere.
@@ -118,7 +118,7 @@ def _false_positives(results: list[RowResult], report: Report) -> int:
 
 
 def _raw_leaks(results: list[RowResult], report: Report) -> int:
-    """AT-12: a fake that went in must not come back out, whole or from its middle."""
+    """a fake that went in must not come back out, whole or from its middle."""
     leaks = 0
     for result in results:
         for kind, idx in _FAKE_TOKEN_RE.findall(result.row.raw):
@@ -174,7 +174,7 @@ def evaluate(base_dir: Path, settings: AnalysisSettings) -> Report:
                 if rule_id not in result.fired:
                     report.problems.append(f"missed {rule_id} in row {result.row.id}")
         rate = 100.0 * hit / labeled if labeled else 0.0
-        # Unlabeled findings below critical are allowed here, per the AT-05 target.
+        # Unlabeled findings below critical are allowed here, per the published target.
         unlabeled_critical = 0
         for result in agents:
             for rule_id in result.critical:
@@ -189,11 +189,11 @@ def evaluate(base_dir: Path, settings: AnalysisSettings) -> Report:
         report.metrics.append(_metric("no_raw_secret_leak", "Raw secrets in the output", leaks, 0, "count",
                                       leaks == 0, ", ".join(p for p, r in ((PAYLOADS, payloads), (AGENTS, agents)) if r)))
         per_second, p95 = _speed(payload_rows + agent_rows, settings)
-        # Detection alone. The full pipeline target (AT-24) also has to fit the database.
+        # Detection alone. The full pipeline target also has to fit the database.
         report.metrics += [
             _metric("events_per_s", "Detection speed, 1.6 KB prompts", per_second, 500, "events/s",
                     per_second >= 500, PAYLOADS),
-            _metric("p95_latency_ms", "Detection time per event (p95)", p95, 500, "ms", p95 <= 500, PAYLOADS),
+            _metric("p95_latency_ms", "Detection time per event", p95, 500, "ms", p95 <= 500, PAYLOADS),
         ]
     return report
 

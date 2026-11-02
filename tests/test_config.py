@@ -14,7 +14,7 @@ def load(env=None, tmp=None, **kwargs):
 
 # ---- defaults ----------------------------------------------------------------
 
-def test_defaults_match_the_sot():
+def test_defaults_match_the_documented_values():
     c = load()
     assert (c.host, c.port, c.desktop) == ("127.0.0.1", 8787, True)
     assert c.db_path == Path("/proj/data/shadow.db")
@@ -116,7 +116,7 @@ def test_comma_lists_are_trimmed_and_empties_dropped():
 
 
 def test_workspace_roots_are_kept_as_strings():
-    # They are matched like payload paths (SOT 7.4), so they must not be expanded.
+    # They are matched like payload paths, so they must not be expanded.
     c = load({"SHADOWLENS_WORKSPACE_ROOTS": "~/work, C:\\Users\\dev\\proj"})
     assert c.workspace_roots == ("~/work", "C:\\Users\\dev\\proj")
 

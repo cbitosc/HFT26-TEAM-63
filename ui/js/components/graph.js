@@ -1,4 +1,4 @@
-// Exposure graph (Frontend Design PDF p8): processes on the left, providers on the right.
+// Exposure graph: processes on the left, providers on the right.
 // Link thickness = events. A teal "!" square on a link = the link has findings. Drawn as SVG; labels via textContent only.
 import { el, svg, fmtNumber, bandLabel, bandTone } from "../ui.js";
 
@@ -7,7 +7,7 @@ const ROW = 88;
 const BOX_W = 212;
 const BOX_H = 48;
 const LEFT_X = 60;
-const RIGHT_X = W - 60 - BOX_W - 160;     // leaves room on the right like the PDF
+const RIGHT_X = W - 60 - BOX_W - 160;     // leaves room on the right
 const TOP = 30;
 
 /** graph: { nodes, edges }. onSelect(node). selectedId: node id. Returns an SVG element. */

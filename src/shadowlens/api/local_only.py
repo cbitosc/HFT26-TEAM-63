@@ -1,4 +1,4 @@
-"""Only this machine may talk to the API (SOT 5.5, 7.3 AT-21).
+"""Only this machine may talk to the API.
 
 The server already listens on 127.0.0.1 only. This closes the other door: a web page the person has open can
 make their browser send requests to 127.0.0.1, and a hostile site can point its own name at 127.0.0.1

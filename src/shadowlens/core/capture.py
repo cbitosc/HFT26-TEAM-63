@@ -1,4 +1,4 @@
-"""Control of what is being watched right now, and the status the Capture screen shows (SOT 6.7).
+"""Control of what is being watched right now, and the status the Capture screen shows.
 
 Three live inputs are managed here:
   * the process scan (looks at open connections every few seconds; off unless asked for),

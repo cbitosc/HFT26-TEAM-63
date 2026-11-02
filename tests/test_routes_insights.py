@@ -144,7 +144,7 @@ def test_approving_a_provider_rescores_the_organisation(tmp_path, db, bus):
         started = time.perf_counter()
         r = c.put("/api/providers/openai/sanction", json={"sanctioned": True})
         elapsed = time.perf_counter() - started
-        assert r.status_code == 200 and elapsed < 0.3                       # AT-17: well under 300 ms
+        assert r.status_code == 200 and elapsed < 0.3                       # well under 300 ms
         body = r.json()
         assert body["provider"]["provider_id"] == "openai"
         assert (body["provider"]["sanctioned"], body["provider"]["sanction_source"]) == (True, "override")

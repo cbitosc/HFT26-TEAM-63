@@ -1,4 +1,4 @@
-"""Secrets that are broken up or encoded, found without guessing (SOT 7.3).
+"""Secrets that are broken up or encoded, found without guessing.
 
 Two disguises are handled, both only for secrets with a recognizable shape (the named patterns):
 

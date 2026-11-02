@@ -74,10 +74,10 @@ def test_the_quick_leak_numbers_end_to_end(setup):
     s = setup(analyze=analyzer(leak()))                  # one AWS secret + the unapproved-tool policy finding
     s.ingest(ev())
     tool = s.insights.tools()[0]
-    assert (tool.tool_id, tool.risk, tool.risk_band) == ("python3|openai", 52, Band.HIGH)     # SOT 7.5 case 5: S = 58.5
+    assert (tool.tool_id, tool.risk, tool.risk_band) == ("python3|openai", 52, Band.HIGH)     # pinned case 5: S = 58.5
     assert (tool.finding_counts.critical, tool.finding_counts.low, tool.finding_counts.high) == (1, 1, 0)
     risk = s.insights.risk()
-    assert (risk.org_risk, risk.compliance_score, risk.band) == (52, 48, Band.HIGH)            # SOT 8.2: quick_leak = 52
+    assert (risk.org_risk, risk.compliance_score, risk.band) == (52, 48, Band.HIGH)            # quick_leak = 52
 
 
 def test_tool_details(setup):
@@ -178,7 +178,7 @@ def test_recomputing_a_large_database_is_fast(setup, tmp_path):
     s.insights.summary()
     s.insights.graph()
     s.insights.score_explain()
-    assert time.perf_counter() - started < 1.0                                 # SOT 6.7: re-score well under a second
+    assert time.perf_counter() - started < 1.0                                 # re-score well under a second
 
 
 # ---- agents ------------------------------------------------------------------
@@ -220,7 +220,7 @@ def test_every_catalog_provider_is_listed_with_its_usage(setup):
     openai = s.insights.provider("openai")
     assert (openai.sanctioned, openai.sanction_source.value, openai.confirmed) == (False, "default", True)
     ollama = s.insights.provider("ollama")
-    assert (ollama.sanctioned, ollama.sanction_source.value) == (True, "default")             # the SOT's default list
+    assert (ollama.sanctioned, ollama.sanction_source.value) == (True, "default")             # the default list
     assert s.insights.provider("nobody") is None
 
 

@@ -1,4 +1,4 @@
-"""Checksums that separate real-looking IDs from random digits (SOT 7.3, 8.1).
+"""Checksums that separate real-looking IDs from random digits.
 
 Bad input returns ``False`` and never raises. The ``*_check_digit`` builders are
 used by ``fakes.py`` to generate values that pass these checks at runtime.

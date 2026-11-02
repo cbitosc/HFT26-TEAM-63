@@ -12,13 +12,13 @@ import { tweenNumber } from "./motion.js";
 
 showSplash();
 
-const SCENARIOS = ["full_demo", "quick_leak", "agent_attack", "clean_baseline"];   // the four names the backend accepts (scenarios/loader.py); the design does not draw the list (UD-19)
+const SCENARIOS = ["full_demo", "quick_leak", "agent_attack", "clean_baseline"];   // the four names the backend accepts (scenarios/loader.py); the design does not draw the list
 
 const app = document.getElementById("app");
 const banner = el("div", { hidden: true });
 const main = el("main", { class: "main", id: "main", tabindex: "-1" });
 
-/* Scenario actions. Errors say what failed and offer Retry. Reset has no confirmation because none is drawn (UD-20). */
+/* Scenario actions. Errors say what failed and offer Retry. Reset has no confirmation because none is drawn. */
 async function runScenario(kind, name) {
   bar.setBusy(true);
   try {

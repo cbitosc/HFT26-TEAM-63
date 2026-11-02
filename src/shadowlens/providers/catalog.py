@@ -1,4 +1,4 @@
-"""The AI provider catalog (SOT 7.1), loaded from ``config/providers.yaml``.
+"""The AI provider catalog, loaded from ``config/providers.yaml``.
 
 Every entry is validated when the file is loaded, so a typo (unknown category,
 bad regex, unknown rule id, duplicate id) fails at startup with a clear message.
@@ -186,7 +186,7 @@ class Catalog:
     def resolvable_hosts(self) -> dict[str, str]:
         """``{host name: provider_id}`` for every literal host of a cloud provider.
 
-        These are the names the resolver looks up (SOT 7.1). Regex providers and local
+        These are the names the resolver looks up. Regex providers and local
         servers have nothing to look up.
         """
         return {h: p.id for p in self.providers if not p.is_local for h in p.hosts}

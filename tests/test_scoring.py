@@ -8,7 +8,7 @@ from shadowlens.core.scoring import (
 )
 from shadowlens.models import Band, Severity
 
-CLOUD, APP, HUB, LOCAL = 1.0, 1.0, 1.1, 0.4          # category exposure multipliers (SOT 7.1)
+CLOUD, APP, HUB, LOCAL = 1.0, 1.0, 1.1, 0.4          # category exposure multipliers
 _ids = itertools.count(1)
 
 
@@ -29,7 +29,7 @@ def finding(rule, severity, confidence, minute=0):
     return F(rule, Severity(severity), confidence, f"2026-10-31T10:{minute:02d}:00.000Z")
 
 
-# ---- the eight cases pinned in SOT 7.5 ---------------------------------------
+# ---- the eight pinned cases ---------------------------------------
 
 def test_pinned_1_one_critical_on_a_cloud_tool():
     result = score_tool("t", [finding("SEC_PRIVATE_KEY", "critical", 0.95)], exposure=CLOUD, sanctioned=False)

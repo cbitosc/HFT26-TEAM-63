@@ -1,4 +1,4 @@
-"""Per-tool memory for agent analysis (SOT 7.4, "Context").
+"""Per-tool memory for agent analysis.
 
 An ``AgentSessionContext`` is kept for each tool (``process|provider``). It is what lets
 the analyzer avoid re-flagging an agent's old tool calls every time the whole conversation
@@ -20,7 +20,7 @@ class AgentSessionContext:
     tool_id: str
     seen_calls: set[str] = field(default_factory=set)            # hash12 of "tool name + normalized arguments"
     granted: set[CapabilityName] = field(default_factory=set)    # capabilities the agent declared it has
-    last_injection_ts: str | None = None                         # P2: for the injection-chain rule
+    last_injection_ts: str | None = None                         # for the injection-chain rule (not built yet)
 
 
 class AgentContexts:

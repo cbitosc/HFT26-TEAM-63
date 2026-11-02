@@ -1,11 +1,11 @@
-// Capture (Frontend Design PDF p16 visibility, p17 controls, p18 sources). Three views under one nav link: ?view=visibility|controls|sources.
+// Capture. Three views under one nav link: ?view=visibility|controls|sources.
 // Sources: list GET /api/sources, switch PUT /api/sources/{id} {enabled}. "Scan existing history" is the same PUT with
 // backfill: true; the source then reads the recent past in the background, so results arrive over the live stream.
 import { el, fmtNumber, fmtTime, pct } from "../ui.js";
 import { watch, load, SOURCE_UNIT } from "./util.js";
 
 const VIEWS = [{ id: "visibility", label: "Visibility" }, { id: "controls", label: "Controls" }, { id: "sources", label: "Sources" }];
-const SUBTITLE = { visibility: "What ShadowLens watches, and what it cannot see.", controls: "Controls, scenarios and the last ingest.", sources: "One card per source. Switch it on to start watching." };
+const SUBTITLE = { visibility: "What Shadow Lens watches, and what it cannot see.", controls: "Controls, scenarios and the last ingest.", sources: "One card per source. Switch it on to start watching." };
 const PLATFORM = { linux: "Linux", darwin: "macOS", windows: "Windows" };
 const SCOPE = { own_user: "own user", all_users: "all users", unknown: "unknown" };
 const MAX_LOG_BYTES = 20 * 1024 * 1024;
@@ -77,7 +77,7 @@ export function mount(container, ctx) {
       tap ? item("Ollama tap", tap.enabled && px ? `on · port ${px.listen_port} → ${px.upstream} · ${fmtNumber(tap.lines_ingested ?? 0)} requests` : "off") : null,
       tap ? item("Last tap error", tap.error ?? "none") : null));
     if (cap.scan.scope === "own_user" && !cap.scan.privileged) {
-      card.append(el("p", { class: "small cap-note" }, "The scan sees only processes owned by your user. Run ShadowLens with elevated rights to see all users."));
+      card.append(el("p", { class: "small cap-note" }, "The scan sees only processes owned by your user. Run Shadow Lens with elevated rights to see all users."));
     }
     if (!cap.scan.psutil_ok) card.append(el("p", { class: "small cap-note" }, "The connection scan is not available on this machine."));
     return card;

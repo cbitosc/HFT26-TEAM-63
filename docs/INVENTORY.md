@@ -51,9 +51,9 @@ known to be Claude Code, so the shared address is enough. A local model server (
 confirmed by its port on the loopback address. Connections to anywhere else are listed as "not tied to
 its provider". Lookups are cut off after 3 seconds, so a stuck DNS server cannot hold up the scan.
 
-## Giving it to ShadowLens
+## Giving it to Shadow Lens
 
-`connection_records()` turns confirmed connections into HTTP-log lines (SOT 6.3) that can be uploaded to
+`connection_records()` turns confirmed connections into HTTP-log lines that can be uploaded to
 `POST /api/ingest/log`, so they are scored and alerted like any other traffic. Each is recorded as a
 `CONNECT` with no body: the connection was observed, no request was seen, and nothing was read
 (`metadata_only`). The guided demo's first step does exactly this.

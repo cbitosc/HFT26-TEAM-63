@@ -130,7 +130,7 @@ def test_concurrent_notifications_never_exceed_the_rate():
     publisher.close()
 
 
-def test_the_score_update_model_follows_the_sot_shape():
+def test_the_score_update_model_follows_the_documented_shape():
     update = ScoreUpdate(risk=RiskBlock(org_risk=52, band=Band.HIGH, compliance_score=48),
                          tool=TopTool(tool_id="python3|openai", risk=52, risk_band=Band.HIGH))
     assert update.model_dump(mode="json") == {

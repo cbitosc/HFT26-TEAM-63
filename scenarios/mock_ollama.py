@@ -1,10 +1,10 @@
-"""A tiny stand-in for a local Ollama server (SOT 8.3).
+"""A tiny stand-in for a local Ollama server.
 
     python -m scenarios.mock_ollama [--port 11434] [--no-log]
 
 Answers ``/api/chat``, ``/api/generate`` and ``/api/tags`` with a canned reply. Unless
 ``--no-log`` is given, each request is appended to ``data/live/ollama.jsonl`` in the HTTP log
-format (SOT 6.3), which is where the live log tail reads it from.
+format, which is where the live log tail reads it from.
 
 That file holds request bodies as sent, so it is for fake demo traffic only: do not point a
 real client with real prompts at this server.
@@ -27,7 +27,7 @@ from shadowlens.models import utc_now_iso
 DEFAULT_PORT = 11434
 LOG_FILE_NAME = "ollama.jsonl"
 MAX_BODY_BYTES = 20 * 1024 * 1024
-CANNED_REPLY = "This is a canned reply from the ShadowLens mock server."
+CANNED_REPLY = "This is a canned reply from the Shadow Lens mock server."
 
 _KEPT_HEADERS = ("content-type", "user-agent", "x-shadow-client")
 
@@ -147,7 +147,7 @@ class MockOllamaHandler(BaseHTTPRequestHandler):
 
 
 class MockOllamaServer(ThreadingHTTPServer):
-    # On Windows, address reuse would let a second program share the port (SOT 1.2).
+    # On Windows, address reuse would let a second program share the port.
     allow_reuse_address = False
     daemon_threads = True
 

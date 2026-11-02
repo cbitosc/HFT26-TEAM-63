@@ -5,7 +5,7 @@
 // or add <meta name="shadowlens-api-base" content="http://127.0.0.1:8790"> to index.html.
 //
 // Mock mode: open the page with ?mock=1. Requests then read ui/mock/<path>.json instead of the network.
-//   /api/stats/summary        -> mock/stats_summary.json         (SOT 9.1: drop "/api/", slashes become underscores)
+//   /api/stats/summary        -> mock/stats_summary.json
 //   /api/alerts/<uuid>/ack    -> mock/alerts_id_ack.json         (id-like segments become "id"; our addition)
 // A host page can also set window.SHADOWLENS_MOCK = true before loading this module (used by the hosted preview).
 // Query strings are ignored in mock mode. A missing mock file is an error, never a silent success.

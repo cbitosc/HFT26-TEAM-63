@@ -1,6 +1,6 @@
-"""Reads a scenario template and gives each line a real timestamp (SOT 7.2).
+"""Reads a scenario template and gives each line a real timestamp.
 
-The returned lines are in the HTTP log format (SOT 6.3), ready for the log parser.
+The returned lines are in the HTTP log format, ready for the log parser.
 """
 
 from __future__ import annotations

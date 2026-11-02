@@ -1,4 +1,4 @@
-"""AT-31: the tap forwards unchanged, streaming stays streaming, and a dead upstream still records."""
+"""the tap forwards unchanged, streaming stays streaming, and a dead upstream still records."""
 
 import gzip
 import http.client
@@ -272,7 +272,7 @@ def test_a_failing_pipeline_never_blocks_the_client(upstream):
 
 # ---- the event ---------------------------------------------------------------------------------
 
-def test_event_matches_the_sot(tap, events, upstream):
+def test_event_matches_the_contract(tap, events, upstream):
     port = upstream.server_address[1]
     call(tap.listen_port, "POST", "/api/chat?x=1", b'{"model":"m"}', {"Authorization": "Bearer a", "Cookie": "c=1"})
     event = events[0]
@@ -359,7 +359,7 @@ def test_from_config_uses_the_settings(tmp_path, events):
     assert (instance.listen_port, instance.upstream, instance.app.max_body_bytes) == (11999, "127.0.0.1:11500", 99)
 
 
-# ---- AT-32: mock server + tap + agent_sim, end to end ------------------------------------------------
+# ---- mock server + tap + agent_sim, end to end ------------------------------------------------
 
 def test_at32_planted_key_gives_exactly_one_finding_through_the_real_pipeline(tmp_path):
     """mock_ollama --no-log, so the tap is the only path that sees the request."""

@@ -1,4 +1,4 @@
-"""The Ollama tap, switched on through the sources API and read by the pipeline (SOT 7.2.2, AT-30, AT-32)."""
+"""The Ollama tap, switched on through the sources API and read by the pipeline."""
 
 import json
 import socket
@@ -14,7 +14,7 @@ from shadowlens.api.app import create_app
 from shadowlens.config import Config
 from shadowlens.fakes import fake
 
-OLLAMA_PORT = 11434                      # the provider rule for local models is keyed to this port (SOT 7.1)
+OLLAMA_PORT = 11434                      # the provider rule for local models is keyed to this port
 
 
 def free_port() -> int:

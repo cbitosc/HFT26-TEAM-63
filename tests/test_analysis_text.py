@@ -80,7 +80,7 @@ def test_entropy_cap_keeps_three_and_marks_truncation():
     assert all(f.truncated for f in findings)
 
 
-# ---- negatives from SOT 8.4 ---------------------------------------------------
+# ---- labeled negatives ---------------------------------------------------
 
 @pytest.mark.parametrize("text", [
     "a plain sentence about nothing in particular",
@@ -162,7 +162,7 @@ def test_key_inside_code_gives_both_findings_and_no_raw_value():
     assert all(key not in f.context for f in result.findings)
 
 
-# ---- redaction and privacy (AT-12, guard) --------------------------------------
+# ---- redaction and privacy (guard) --------------------------------------
 
 def _all_fakes():
     return [fake(kind, 1) for kind in (

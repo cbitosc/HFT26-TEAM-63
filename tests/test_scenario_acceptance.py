@@ -1,5 +1,5 @@
-"""AT-08: each demo scenario, loaded through the real parser, analyzer, pipeline, scoring and API,
-meets the numbers the SOT promises (SOT 8.2). If one misses, tune the scenario file, never the formula."""
+"""each demo scenario, loaded through the real parser, analyzer, pipeline, scoring and API,
+meets the numbers the docs promise. If one misses, tune the scenario file, never the formula."""
 
 import pytest
 from fastapi.testclient import TestClient

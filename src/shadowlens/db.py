@@ -1,10 +1,10 @@
-"""SQLite storage for ShadowLens (SOT section 6.9).
+"""SQLite storage for Shadow Lens.
 
 What is stored: events (metadata only), findings (masked), alerts, remediations,
 agent activity, the AI call ledger, provider sanction overrides, the transcript
 read offsets and a few counters.
 
-What is NEVER stored (SOT 6.9): request bodies, headers, query strings, raw
+What is NEVER stored: request bodies, headers, query strings, raw
 secrets, command lines. This is enforced two ways:
 
   * no table has a column that could hold them (checked by a test), and
@@ -107,7 +107,7 @@ CREATE TABLE IF NOT EXISTS findings (
     argument        TEXT,
     created_at      TEXT NOT NULL
 );
--- A finding exists at most once per (tool, rule, matched value) (SOT 6.5).
+-- A finding exists at most once per (tool, rule, matched value).
 CREATE UNIQUE INDEX IF NOT EXISTS uq_findings_dedupe ON findings(tool_id, rule_id, hash12);
 CREATE INDEX IF NOT EXISTS idx_findings_event ON findings(event_id);
 CREATE INDEX IF NOT EXISTS idx_findings_tool  ON findings(tool_id);
@@ -187,7 +187,7 @@ CREATE TABLE IF NOT EXISTS counters (
 """
 
 # Tables cleared by reset(), children first. source_offsets is kept on purpose so a
-# reset does not make the transcript reader re-read old history (SOT 6.8, 7.2.1).
+# reset does not make the transcript reader re-read old history.
 _RESET_ORDER = (
     "llm_calls", "agent_activity", "remediations", "alerts", "findings", "events",
     "provider_overrides", "counters",
@@ -199,7 +199,7 @@ class DatabaseError(RuntimeError):
 
 
 def clamp_page(limit: int | None, offset: int | None) -> tuple[int, int]:
-    """Apply the list rules from SOT 6.1: ``limit`` default 100, max 1000; ``offset`` at least 0."""
+    """Apply the list rules: ``limit`` default 100, max 1000; ``offset`` at least 0."""
     lim = DEFAULT_LIMIT if limit is None else max(1, min(int(limit), MAX_LIMIT))
     off = 0 if offset is None else max(0, min(int(offset), MAX_OFFSET))
     return lim, off
@@ -357,7 +357,7 @@ class Database:
 
     def insert_finding(self, finding: Finding) -> bool:
         """Store a finding. Returns False (and stores nothing) if the same
-        (tool, rule, matched value) was already recorded (SOT 6.5)."""
+        (tool, rule, matched value) was already recorded."""
         meta, loc = finding.meta, finding.location
         changed = self._run(
             """INSERT OR IGNORE INTO findings
@@ -431,7 +431,7 @@ class Database:
 
     def save_remediation(self, remediation: Remediation) -> Remediation:
         """Store a remediation for an alert. Idempotent: if the alert already has one,
-        the existing one is kept and returned (SOT 6.7)."""
+        the existing one is kept and returned."""
         self._run(
             """INSERT OR IGNORE INTO remediations
                (id, alert_id, summary, steps, sensitivity, verdict, data_classes, source, model,
@@ -558,7 +558,7 @@ class Database:
     def repeat_alert(self, tool_id: str, rule_id: str, hash12: str, now: str, older_than: str) -> Alert | None:
         """The same leak was sent again: re-open its alert and move it to the top, as of ``now``.
 
-        There is still one finding and one alert (SOT 6.5, 6.9), so the score does not change. Returns ``None``
+        There is still one finding and one alert, so the score does not change. Returns ``None``
         when there is no alert for that finding, or its alert is newer than ``older_than`` (a burst of identical
         lines is one occurrence)."""
         with self.transaction():
@@ -719,7 +719,7 @@ class Database:
     # ---- reset -----------------------------------------------------------
 
     def reset(self) -> None:
-        """Clear everything the Reset button clears (SOT 6.7). Offsets are kept."""
+        """Clear everything the Reset button clears. Offsets are kept."""
         with self.transaction():
             for table in _RESET_ORDER:
                 self._run(f"DELETE FROM {table}")

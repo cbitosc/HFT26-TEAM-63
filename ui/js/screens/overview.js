@@ -1,4 +1,4 @@
-// Overview (Frontend Design PDF p7, states p9). The exposure graph (p8) arrives in Phase 8.
+// Overview.
 import { el, fmtNumber, fmtTime, bandLabel, bandTone } from "../ui.js";
 import { watch, load, byNewest, namer, cardError, alertHref } from "./util.js";
 import { exposureGraph } from "../components/graph.js";
@@ -104,7 +104,7 @@ export function mount(container, ctx) {
       body);
   }
 
-  /* ---------- exposure graph (p8) ---------- */
+  /* ---------- exposure graph ---------- */
   function graphSection() {
     const entry = store.state("graph");
     const card = el("section", { class: "card xg-card" },

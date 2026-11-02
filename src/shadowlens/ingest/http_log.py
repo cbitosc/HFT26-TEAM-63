@@ -1,4 +1,4 @@
-"""Read HTTP request logs (JSONL) and browser HAR files into ``NetEvent``s (SOT 6.3, 7.2).
+"""Read HTTP request logs (JSONL) and browser HAR files into ``NetEvent``s.
 
 The same record-to-event code serves every file-like source: uploads, the live
 log tail and the scenario loader all call ``event_from_record``.
@@ -29,11 +29,11 @@ from pydantic import ValidationError
 
 from ..models import AuthScheme, HostBasis, NetEvent, Source, new_id
 
-MAX_LOG_BYTES = 20 * 1024 * 1024     # SOT 6.3
-MAX_ERRORS = 20                       # SOT 6.3
+MAX_LOG_BYTES = 20 * 1024 * 1024   
+MAX_ERRORS = 20                     
 DEFAULT_MAX_BODY_BYTES = 262144      # most large pastes and long conversations fit whole; see keep_head_and_tail
 
-# Sources a log line may name for itself (SOT 6.3).
+# Sources a log line may name for itself.
 _LINE_SOURCES = {s.value: s for s in (Source.HTTP_LOG, Source.PCAP, Source.CONN_SCAN, Source.SCENARIO)}
 _HOST_PORT = re.compile(r"^(?P<host>[^:\[\]]+):(?P<port>\d{1,5})$")
 
@@ -82,7 +82,7 @@ def split_lines(text: str) -> list[str]:
 
 
 def format_ts(moment: datetime) -> str:
-    """ISO-8601 UTC with milliseconds and a trailing Z (SOT 6.1)."""
+    """ISO-8601 UTC with milliseconds and a trailing Z."""
     return moment.astimezone(timezone.utc).strftime("%Y-%m-%dT%H:%M:%S.%f")[:-3] + "Z"
 
 
@@ -206,7 +206,7 @@ def event_from_record(
     expand: Expander | None = None,
     base_time: datetime | None = None,
 ) -> NetEvent:
-    """Build a ``NetEvent`` from one log record (SOT 6.3).
+    """Build a ``NetEvent`` from one log record.
 
     ``source`` forces the event's source (the live tail uses ``live_log``); if None the
     record's own ``source`` is used, defaulting to ``http_log``. ``expand`` turns
@@ -245,7 +245,7 @@ def event_from_record(
         try:
             dst_ip = str(ipaddress.ip_address(bare_host.strip("[]")))     # host is itself an address
         except ValueError:
-            dst_ip = "0.0.0.0"                                           # unknown (SOT 6.3)
+            dst_ip = "0.0.0.0"                                           # unknown
     elif not isinstance(dst_ip, str):
         raise LogLineError("dst_ip must be a string")
 
@@ -319,7 +319,7 @@ def _parse_jsonl(text: str, result: ParseResult, **options: Any) -> None:
 
 
 def _har_record(entry: object) -> dict[str, Any]:
-    """Translate one HAR 1.2 entry into the record format of SOT 6.3."""
+    """Translate one HAR 1.2 entry into the record format used by the log parser."""
     if not isinstance(entry, dict) or not isinstance(entry.get("request"), dict):
         raise LogLineError("entry has no request")
     request = entry["request"]

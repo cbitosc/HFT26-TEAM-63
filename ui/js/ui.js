@@ -1,5 +1,5 @@
 // Small DOM and formatting helpers.
-// API strings are untrusted (SOT 6.10): everything goes in through textContent or text nodes,
+// API strings are untrusted: everything goes in through textContent or text nodes,
 // never innerHTML.
 
 const SVG_NS = "http://www.w3.org/2000/svg";
@@ -76,7 +76,7 @@ export function pct(part, whole) {
   return whole > 0 ? Math.round((part / whole) * 100) : 0;
 }
 
-/** Band names from the API (SOT 6.6) -> label shown in the design. "high" shows as "Elevated" (design p7, p13). */
+/** Band names from the API -> label shown in the design. "high" shows as "Elevated". */
 const BAND_LABELS = { low: "Low", moderate: "Moderate", high: "Elevated", critical: "Critical" };
 export function bandLabel(band) {
   return BAND_LABELS[band] ?? "–";

@@ -278,7 +278,7 @@ def metric(**o):
     return base
 
 
-def test_evidence_metric_serializes_pass_with_the_sot_name():
+def test_evidence_metric_serializes_pass_with_the_documented_name():
     ev = Evidence(available=True, generated_at=TS, metrics=[metric()])
     dumped = ev.model_dump(mode="json", by_alias=True)
     assert set(dumped["metrics"][0]) == {"id", "label", "value", "target", "unit", "pass", "fixture", "command"}
@@ -379,7 +379,7 @@ def test_request_bodies():
     assert m.CaptureControlRequest().scan is None
 
 
-def test_scenario_names_are_the_four_from_the_sot():
+def test_scenario_names_are_the_four_documented_ones():
     assert {s.value for s in m.ScenarioName} == {"clean_baseline", "full_demo", "agent_attack", "quick_leak"}
 
 

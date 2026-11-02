@@ -1,6 +1,6 @@
-"""Leak Lab: analyse text a person types, without storing anything (SOT 6.7, 9.3.2).
+"""Leak Lab: analyse text a person types, without storing anything.
 
-The analysis itself is Saleha's ``analysis.preview``: the findings with their positions, the text an
+The analysis itself is ``analysis.preview``: the findings with their positions, the text an
 AI model would be sent (secrets replaced by placeholders), and whether the egress guard would block
 that text. This module adds the one thing that needs the scoring maths: how many risk points the
 text would add. Nothing is written to the database or the log.
@@ -44,7 +44,7 @@ def build_preview(text: str, mode: AnalyzeMode, config: Config) -> Preview:
     rows.sort(key=lambda r: r.span)
 
     # One row per match lets the screen highlight each one, but two matches of the same value are one
-    # finding for scoring (SOT 7.5 counts a finding once). Matches of different values stay separate.
+    # finding for scoring. Matches of different values stay separate.
     distinct: dict[tuple[str, str], PreviewFinding] = {}
     for row in rows:
         distinct.setdefault((row.rule_id, row.masked_preview), row)

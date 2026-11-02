@@ -1,5 +1,5 @@
 // Live updates. SSE from /api/stream patches the store. While the stream is down the page polls
-// /api/stats/summary every 3 s and shows last good data (SOT 6.8, design p9 banner).
+// /api/stats/summary every 3 s and shows last good data.
 import { api, MOCK } from "./api.js";
 import { store } from "./store.js";
 

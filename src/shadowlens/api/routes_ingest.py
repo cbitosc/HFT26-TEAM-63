@@ -1,4 +1,4 @@
-"""Routes for getting data in and reading it back (SOT 6.7):
+"""Routes for getting data in and reading it back:
 
 ``POST /api/ingest/log``, ``GET /api/events``, ``GET /api/findings``,
 ``GET /api/alerts``, ``POST /api/alerts/{id}/ack``.

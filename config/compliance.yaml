@@ -1,8 +1,8 @@
-# Compliance mapping (SOT 7.6). Loaded by src/shadowlens/core/compliance.py.
+# Compliance mapping. Loaded by src/shadowlens/core/compliance.py.
 #
 # A control is "gap" when at least one finding whose rule matches one of its `rules` patterns is still open
 # (its alert has not been acknowledged), and "ok" otherwise. A pattern ending in * matches any rule that
-# starts with the text before it. Frameworks marked [UNVERIFIED] in the SOT are interpretations of the text
+# starts with the text before it. Frameworks marked [UNVERIFIED] are interpretations of the text
 # of those frameworks, which has not been checked against the official documents.
 
 controls:

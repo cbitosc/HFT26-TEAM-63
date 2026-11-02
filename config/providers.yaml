@@ -1,4 +1,4 @@
-# AI provider catalog (SOT 7.1). Loaded and validated by src/shadowlens/providers/catalog.py.
+# AI provider catalog. Loaded and validated by src/shadowlens/providers/catalog.py.
 #
 # hosts          : suffix matches. "api.openai.com" matches that host and any "x.api.openai.com".
 # host_regex     : full-match regex on the host name (for hosts with a variable part).
@@ -8,9 +8,9 @@
 # native_key_rules : rule ids whose credentials are normal use for this provider, so they are
 #                  not findings when sent to it (an OpenAI key sent to api.openai.com).
 # sanctioned_default : approved out of the box. Must equal the SHADOWLENS_SANCTIONED default.
-# unverified     : hostname not yet checked against the real service (SOT 15, item 7).
+# unverified     : hostname not yet checked against the real service.
 
-# Exposure multiplier per category, used by scoring (SOT 7.1, 7.5).
+# Exposure multiplier per category, used by scoring.
 category_exposure:
   cloud_llm: 1.0
   ai_app: 1.0
@@ -162,7 +162,7 @@ providers:
   - id: ollama
     display_name: Ollama
     category: local_llm
-    ports: [11434, 11435]           # 11435: the fallback when a real Ollama already holds 11434 (SOT 12.2)
+    ports: [11434, 11435]           # 11435: the fallback when a real Ollama already holds 11434
     path_hints: [/api/generate, /api/chat, /api/tags]
     sanctioned_default: true        # via SHADOWLENS_SANCTIONED
 

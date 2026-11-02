@@ -1,4 +1,4 @@
-"""Read-side routes: tools, agents, providers, scores, graph, summary (SOT 6.7).
+"""Read-side routes: tools, agents, providers, scores, graph, summary.
 
 All of these are computed from the stored rows by ``core.views.Insights``.
 """

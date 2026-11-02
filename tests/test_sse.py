@@ -33,7 +33,7 @@ def test_message_format_for_dicts_and_models():
     assert json.loads(message.split("data: ", 1)[1]) == {"org_risk": 52, "band": "high", "compliance_score": 48}
 
 
-def test_event_types_are_the_sot_list():
+def test_event_types_are_the_documented_list():
     assert EVENT_TYPES == {"event.new", "finding.new", "alert.new", "score.update",
                            "remediation.update", "scenario.progress", "reset"}
 

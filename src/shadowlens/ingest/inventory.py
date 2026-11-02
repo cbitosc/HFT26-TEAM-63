@@ -1,4 +1,4 @@
-"""What AI is on this machine: running, installed or left behind (SOT 1, 4.5, 7.2.1).
+"""What AI is on this machine: running, installed or left behind.
 
 The live scan only sees programs that are talking right now, and can only guess who they talk to.
 This looks at the machine itself: running programs, installed apps, editor and browser extensions,
@@ -602,10 +602,10 @@ def scan(
 
 
 def connection_records(result: InventoryResult, now: str | None = None) -> list[dict[str, Any]]:
-    """Confirmed connections as HTTP-log lines (SOT 6.3), ready to upload to ``/api/ingest/log``.
+    """Confirmed connections as HTTP-log lines, ready to upload to ``/api/ingest/log``.
 
     Each is a connection that was actually observed, recorded as a CONNECT because no request was seen
-    (``body`` is null, so ShadowLens treats it as "address only" and reads nothing).
+    (``body`` is null, so Shadow Lens treats it as "address only" and reads nothing).
     """
     stamp = now or utc_now_iso()
     records, seen = [], set()

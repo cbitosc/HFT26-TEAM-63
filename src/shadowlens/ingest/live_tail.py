@@ -1,4 +1,4 @@
-"""Watch the live log folder and ingest new lines as they appear (SOT 7.2, ``live_log``).
+"""Watch the live log folder and ingest new lines as they appear.
 
 A local AI server (or our mock) appends one JSON request per line to a ``*.jsonl`` file in
 ``data/live/``. Every half second we read what was added since last time and ingest it.

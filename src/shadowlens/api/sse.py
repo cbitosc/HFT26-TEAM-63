@@ -1,4 +1,4 @@
-"""Server-Sent Events: the live stream to the dashboard (SOT 6.8).
+"""Server-Sent Events: the live stream to the dashboard.
 
 ``EventBus.publish`` can be called from any thread (the pipeline, the live tail, the
 scenario player). Every connected dashboard gets its own small queue; slow clients
@@ -15,10 +15,10 @@ from typing import Any, AsyncIterator
 
 from pydantic import BaseModel
 
-PING_INTERVAL_S = 15.0       # SOT 6.8: a comment line every 15 s keeps the connection alive
+PING_INTERVAL_S = 15.0       # a comment line every 15 s keeps the connection alive
 QUEUE_SIZE = 1000
 
-# The message types the dashboard understands (SOT 6.8).
+# The message types the dashboard understands.
 EVENT_TYPES = frozenset({
     "event.new", "finding.new", "alert.new", "score.update",
     "remediation.update", "scenario.progress", "reset",

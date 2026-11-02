@@ -1,4 +1,4 @@
-"""Routes for what is being watched and for the demo (SOT 6.7):
+"""Routes for what is being watched and for the demo:
 
 ``/api/scan/connections``, ``/api/capture/*``, ``/api/demo/*``, ``/api/analyze/*``.
 """

@@ -1,6 +1,6 @@
-"""Read a demo scenario file and turn it into timed events (SOT 7.2, "scenario loader").
+"""Read a demo scenario file and turn it into timed events.
 
-A scenario is ``scenarios/templates/<name>.jsonl``: log lines (SOT 6.3) whose time is a
+A scenario is ``scenarios/templates/<name>.jsonl``: log lines whose time is a
 ``t_ms`` offset from the start. This module only reads them; the files themselves, and the
 fake secrets in them, are written by the analysis side.
 

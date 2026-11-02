@@ -1,7 +1,7 @@
-"""Writes the demo scenarios to ``scenarios/templates/<name>.jsonl`` (SOT 8.2).
+"""Writes the demo scenarios to ``scenarios/templates/<name>.jsonl``.
 
 Run from the project folder: ``python -m scenarios.generate``. Output is the same
-every time. Lines use the HTTP log format (SOT 6.3) with ``t_ms``, and secrets only
+every time. Lines use the HTTP log format with ``t_ms``, and secrets only
 ever appear as ``{{fake:...}}`` placeholders, expanded when a scenario is loaded.
 
 If a scenario misses its expected score, tune the content here, never the formula.
